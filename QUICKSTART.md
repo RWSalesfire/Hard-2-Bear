@@ -11,7 +11,7 @@ Get your website live in 15 minutes.
 ## Step 1: Set Up Resend (5 minutes)
 
 1. Go to [resend.com](https://resend.com) and sign up
-2. Click "Add Domain" and enter: `hardtobear.co.uk`
+2. Click "Add Domain" and enter: `hardtobear.uk`
 3. Add the DNS records Resend provides to your domain registrar
 4. Wait for verification (usually 1-5 minutes)
 5. Go to "API Keys" and click "Create API Key"
@@ -27,29 +27,40 @@ Get your website live in 15 minutes.
 5. Add these variables:
    ```
    RESEND_API_KEY = [paste your key from Step 1]
-   NEXT_PUBLIC_SITE_URL = https://hardtobear.co.uk
+   NEXT_PUBLIC_SITE_URL = https://hardtobear.uk
    ```
 6. Click "Deploy"
 7. Wait 2-3 minutes for build to complete
 
-## Step 3: Add Custom Domain (5 minutes)
+## Step 3: Configure Cloudflare DNS for Resend (3 minutes)
+
+1. Log in to [Cloudflare](https://dash.cloudflare.com)
+2. Select your `hardtobear.uk` domain
+3. Go to "DNS" → "Records"
+4. Add the DNS records from Resend (from Step 1):
+   - Add the TXT record for domain verification
+   - Add the MX records for email routing
+   - Add the DKIM/SPF records
+5. Wait for verification in Resend dashboard (1-5 minutes)
+
+## Step 4: Add Custom Domain to Vercel (5 minutes)
 
 1. In Vercel, go to your project settings
 2. Click "Domains"
-3. Add domain: `hardtobear.co.uk`
-4. Add domain: `www.hardtobear.co.uk`
-5. Copy the DNS records Vercel provides
-6. Go to your domain registrar and add:
-   - A record: `76.76.21.21` (for hardtobear.co.uk)
-   - CNAME record: `cname.vercel-dns.com` (for www)
-7. Wait for DNS propagation (5-30 minutes)
+3. Add domain: `hardtobear.uk`
+4. Add domain: `www.hardtobear.uk`
+5. Vercel will show DNS records needed
+6. Go back to Cloudflare DNS:
+   - Add A record: Name: `@`, Content: `76.76.21.21`, Proxy status: Proxied (orange cloud)
+   - Add CNAME record: Name: `www`, Content: `cname.vercel-dns.com`, Proxy status: DNS only (grey cloud)
+7. Wait for DNS propagation (usually instant with Cloudflare)
 
-## Step 4: Test Everything
+## Step 5: Test Everything
 
-1. Visit `https://hardtobear.co.uk`
+1. Visit `https://hardtobear.uk`
 2. Scroll through all sections
 3. Fill out the contact form with test data
-4. Check russell@hardtobear.co.uk for the email
+4. Check russell@hardtobear.uk for the email
 5. Test on mobile device
 
 ## Optional: Add Google Analytics
@@ -96,7 +107,7 @@ To update website content:
 ### Update email address
 Edit `/app/api/contact/route.ts` line 32:
 ```typescript
-to: ['newemail@hardtobear.co.uk'],
+to: ['newemail@hardtobear.uk'],
 ```
 
 ### Update Calendly link
@@ -122,7 +133,7 @@ accent: '#FF5722',     // Your CTA button colour
 
 ## Support
 
-- **Email**: russell@hardtobear.co.uk
+- **Email**: russell@hardtobear.uk
 - **Documentation**: See `README.md` for detailed info
 - **Vercel Docs**: [nextjs.org/docs](https://nextjs.org/docs)
 - **Resend Docs**: [resend.com/docs](https://resend.com/docs)

@@ -6,6 +6,7 @@ A bold, no-BS sales consulting website for Russell Westgarth. Built with Next.js
 
 📦 **New to this project?** Start here:
 - [Quick Start Guide](QUICKSTART.md) - Get live in 15 minutes
+- [Cloudflare Setup Guide](CLOUDFLARE_SETUP.md) - Complete DNS configuration for Cloudflare
 - [Deployment Checklist](DEPLOYMENT_CHECKLIST.md) - Don't miss anything
 - [Pull Request Details](PULL_REQUEST.md) - What's been built
 
@@ -53,7 +54,7 @@ cp .env.example .env
 ```env
 RESEND_API_KEY=your_resend_api_key_here
 NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_measurement_id
-NEXT_PUBLIC_SITE_URL=https://hardtobear.co.uk
+NEXT_PUBLIC_SITE_URL=https://hardtobear.uk
 ```
 
 ### Development
@@ -111,7 +112,7 @@ npm start
 #### For Vercel:
 1. Go to your project settings
 2. Navigate to "Domains"
-3. Add `hardtobear.co.uk` and `www.hardtobear.co.uk`
+3. Add `hardtobear.uk` and `www.hardtobear.uk`
 4. Follow DNS configuration instructions
 
 #### For Netlify:
@@ -122,7 +123,7 @@ npm start
 ## Email Configuration with Resend
 
 1. Sign up at [Resend](https://resend.com)
-2. Verify your domain (hardtobear.co.uk)
+2. Verify your domain (hardtobear.uk)
 3. Generate an API key
 4. Add the API key to your environment variables
 5. Update the `from` email in `/app/api/contact/route.ts` if needed
@@ -229,7 +230,7 @@ The bear illustration is in `/components/BearMascot.tsx`. It's a simple SVG that
 ## Support
 
 For issues or questions:
-- Email: russell@hardtobear.co.uk
+- Email: russell@hardtobear.uk
 - LinkedIn: [linkedin.com/in/russellwestgarth](https://linkedin.com/in/russellwestgarth)
 
 ## Licence

@@ -6,14 +6,14 @@ Use this checklist to ensure nothing is missed when deploying Hard To Bear websi
 
 ### Resend Email Setup
 - [ ] Sign up for Resend account
-- [ ] Add domain: hardtobear.co.uk
+- [ ] Add domain: hardtobear.uk
 - [ ] Add DNS records to domain registrar
 - [ ] Verify domain is verified in Resend
 - [ ] Create API key
 - [ ] Copy API key for use in Vercel
 
 ### Domain Setup
-- [ ] Confirm you own hardtobear.co.uk
+- [ ] Confirm you own hardtobear.uk
 - [ ] Have access to domain DNS settings
 - [ ] Know where to add DNS records
 
@@ -39,15 +39,15 @@ Add these in Vercel project settings:
 
 #### Required
 - [ ] `RESEND_API_KEY` = `re_...` (from Resend)
-- [ ] `NEXT_PUBLIC_SITE_URL` = `https://hardtobear.co.uk`
+- [ ] `NEXT_PUBLIC_SITE_URL` = `https://hardtobear.uk`
 
 #### Optional
 - [ ] `NEXT_PUBLIC_GA_MEASUREMENT_ID` = `G-...` (from Google Analytics)
 
 ### Custom Domain
 - [ ] Go to Vercel project → Settings → Domains
-- [ ] Add domain: `hardtobear.co.uk`
-- [ ] Add domain: `www.hardtobear.co.uk`
+- [ ] Add domain: `hardtobear.uk`
+- [ ] Add domain: `www.hardtobear.uk`
 - [ ] Copy DNS records provided by Vercel
 - [ ] Add DNS records to domain registrar:
   - [ ] A record for root domain
@@ -58,7 +58,7 @@ Add these in Vercel project settings:
 ## Testing
 
 ### Functionality Tests
-- [ ] Visit https://hardtobear.co.uk
+- [ ] Visit https://hardtobear.uk
 - [ ] Check all sections load correctly:
   - [ ] Hero section with bear mascot
   - [ ] Hard Truths section
@@ -75,7 +75,7 @@ Add these in Vercel project settings:
 - [ ] Fill out contact form with test data
 - [ ] Submit form
 - [ ] Check for success message
-- [ ] Verify email received at russell@hardtobear.co.uk
+- [ ] Verify email received at russell@hardtobear.uk
 - [ ] Check email formatting is correct
 - [ ] Test form validation (empty fields)
 - [ ] Test with invalid email format

@@ -37,7 +37,7 @@ Complete build of the Hard To Bear sales consultancy website for Russell Westgar
 - Direct, no-BS messaging throughout (UK English)
 - No corporate jargon, short punchy sentences
 - Bear mascot used sparingly (3 times) for brand consistency
-- Contact form validates and sends emails to russell@hardtobear.co.uk
+- Contact form validates and sends emails to russell@hardtobear.uk
 - Graceful error handling if Resend API not configured
 - Fast loading (145 kB First Load JS)
 - Production build successful
@@ -75,7 +75,7 @@ Create a `.env` file with:
 ```env
 RESEND_API_KEY=your_resend_api_key_here
 NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_measurement_id  # Optional
-NEXT_PUBLIC_SITE_URL=https://hardtobear.co.uk
+NEXT_PUBLIC_SITE_URL=https://hardtobear.uk
 ```
 
 ### 2. Deploy to Vercel (Recommended)
@@ -83,12 +83,12 @@ NEXT_PUBLIC_SITE_URL=https://hardtobear.co.uk
 1. Import repository on [Vercel](https://vercel.com)
 2. Add environment variables in project settings
 3. Deploy (automatic detection of Next.js)
-4. Add custom domain: hardtobear.co.uk
+4. Add custom domain: hardtobear.uk
 
 ### 3. Configure Resend Email
 
 1. Sign up at [Resend](https://resend.com)
-2. Verify domain (hardtobear.co.uk)
+2. Verify domain (hardtobear.uk)
 3. Generate API key
 4. Add to Vercel environment variables
 5. Redeploy

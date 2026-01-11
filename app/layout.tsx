@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hard To Bear | No-BS Sales Consulting for SMEs",
     description: "Direct, honest sales consulting for SME leaders. Build a sales operation that actually scales.",
-    url: "https://hardtobear.co.uk",
+    url: "https://hardtobear.uk",
     siteName: "Hard To Bear",
     locale: "en_GB",
     type: "website",
