@@ -2,6 +2,13 @@
 
 A bold, no-BS sales consulting website for Russell Westgarth. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
+## Quick Links
+
+📦 **New to this project?** Start here:
+- [Quick Start Guide](QUICKSTART.md) - Get live in 15 minutes
+- [Deployment Checklist](DEPLOYMENT_CHECKLIST.md) - Don't miss anything
+- [Pull Request Details](PULL_REQUEST.md) - What's been built
+
 ## Overview
 
 Hard To Bear is a sales consultancy helping SME sales leaders build process-driven sales operations. This website embodies the brand's direct, honest approach with Gong-inspired design and a friendly bear mascot.
