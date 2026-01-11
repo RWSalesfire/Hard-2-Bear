@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not configured');
       return NextResponse.json(
-        { error: 'Email service is not configured. Please contact russell@hardtobear.uk directly.' },
+        { error: 'Email service is not configured. Please contact hello@russellwestgarth.com directly.' },
         { status: 503 }
       );
     }
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
 
     // Send email using Resend
     const data = await resend.emails.send({
-      from: 'Hard To Bear Website <noreply@hardtobear.uk>',
-      to: ['russell@hardtobear.uk'],
+      from: 'Hard To Bear Website <noreply@russellwestgarth.com>',
+      to: ['hello@russellwestgarth.com'],
       subject: `New Sales Reality Check Request from ${name} - ${company}`,
       html: `
         <h2>New Sales Reality Check Request</h2>

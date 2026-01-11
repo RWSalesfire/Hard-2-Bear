@@ -1,43 +1,51 @@
 # Cloudflare DNS Configuration Guide
 
-Complete guide for configuring your `hardtobear.uk` domain on Cloudflare for use with Vercel and Resend.
+Complete guide for configuring your `hardtobear.uk` domain on Cloudflare for use with Vercel.
 
 ## Overview
 
-Since you bought your domain through Cloudflare, you'll manage all DNS records in the Cloudflare dashboard. This guide covers:
-- Setting up email with Resend
-- Connecting your domain to Vercel
+Your setup uses two domains:
+- **Website domain**: `hardtobear.uk` (managed in Cloudflare, hosted on Vercel)
+- **Email domain**: `russellwestgarth.com` (for sending/receiving contact form emails)
+
+This guide covers:
+- Connecting `hardtobear.uk` to Vercel
 - Configuring SSL/TLS settings
 - Performance optimizations
+- Email setup with `russellwestgarth.com`
 
 ## Prerequisites
 
 - Domain `hardtobear.uk` added to Cloudflare
+- Domain `russellwestgarth.com` (wherever it's hosted)
 - Cloudflare account with access to DNS settings
 - Vercel project deployed
 - Resend account created
 
 ---
 
-## Part 1: Configure Email (Resend)
+## Part 1: Configure Email with russellwestgarth.com (Resend)
+
+**Note**: Your contact form emails use `hello@russellwestgarth.com`, which is on a separate domain from your website.
 
 ### Step 1: Get DNS Records from Resend
 
 1. Log in to [Resend](https://resend.com)
 2. Click "Domains" → "Add Domain"
-3. Enter: `hardtobear.uk`
+3. Enter: `russellwestgarth.com`
 4. Resend will show you DNS records to add (typically):
    - **TXT record** for domain verification
    - **MX records** for email routing (if you want to receive emails)
    - **TXT record** for SPF (sender policy framework)
    - **TXT record** for DKIM (email authentication)
 
-### Step 2: Add Records to Cloudflare
+### Step 2: Add Records to Your Email Domain
 
-1. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. Select `hardtobear.uk` domain
-3. Go to **DNS** → **Records**
-4. Click "Add record" for each DNS record from Resend:
+1. Go to wherever `russellwestgarth.com` is hosted (your DNS provider)
+2. Add **ALL** DNS records from Resend
+3. Wait for verification (1-5 minutes)
+
+**Important**: These DNS records go on `russellwestgarth.com`, NOT on `hardtobear.uk`.
 
 #### Example Records (yours will be different):
 

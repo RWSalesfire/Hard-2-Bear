@@ -534,7 +534,7 @@ export default function Home() {
 
               {submitStatus === 'error' && (
                 <p className="text-red-300 text-center font-semibold">
-                  Something went wrong. Email me directly at russell@hardtobear.uk
+                  Something went wrong. Email me directly at hello@russellwestgarth.com
                 </p>
               )}
             </div>
@@ -559,7 +559,7 @@ export default function Home() {
 
             <div className="flex justify-center items-center gap-6 text-2xl">
               <a
-                href="mailto:russell@hardtobear.uk"
+                href="mailto:hello@russellwestgarth.com"
                 className="hover:text-accent transition-colors duration-300"
                 aria-label="Email"
               >
@@ -586,7 +586,7 @@ export default function Home() {
             </div>
 
             <p className="text-sm opacity-75">
-              russell@hardtobear.uk | russellwestgarth.com
+              hello@russellwestgarth.com | russellwestgarth.com
             </p>
           </motion.div>
         </div>
