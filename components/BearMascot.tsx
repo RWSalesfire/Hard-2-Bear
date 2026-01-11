@@ -28,25 +28,25 @@ export default function BearMascot({ size = 'medium', className = '' }: BearMasc
         className="w-full h-full"
       >
         {/* Bear Head */}
-        <circle cx="100" cy="100" r="60" fill="#8B4513" />
+        <circle cx="100" cy="100" r="60" fill="#1A237E" />
 
         {/* Left Ear */}
-        <circle cx="70" cy="55" r="20" fill="#8B4513" />
-        <circle cx="70" cy="55" r="12" fill="#D2691E" />
+        <circle cx="70" cy="55" r="20" fill="#1A237E" />
+        <circle cx="70" cy="55" r="12" fill="#3949AB" />
 
         {/* Right Ear */}
-        <circle cx="130" cy="55" r="20" fill="#8B4513" />
-        <circle cx="130" cy="55" r="12" fill="#D2691E" />
+        <circle cx="130" cy="55" r="20" fill="#1A237E" />
+        <circle cx="130" cy="55" r="12" fill="#3949AB" />
 
         {/* Face/Snout */}
-        <ellipse cx="100" cy="110" rx="35" ry="30" fill="#D2691E" />
+        <ellipse cx="100" cy="110" rx="35" ry="30" fill="#3949AB" />
 
         {/* Left Eye */}
-        <circle cx="85" cy="90" r="6" fill="#1A237E" />
+        <circle cx="85" cy="90" r="6" fill="#263238" />
         <circle cx="87" cy="88" r="2" fill="white" />
 
         {/* Right Eye */}
-        <circle cx="115" cy="90" r="6" fill="#1A237E" />
+        <circle cx="115" cy="90" r="6" fill="#263238" />
         <circle cx="117" cy="88" r="2" fill="white" />
 
         {/* Nose */}
@@ -64,14 +64,14 @@ export default function BearMascot({ size = 'medium', className = '' }: BearMasc
         {/* Eyebrows - giving character */}
         <path
           d="M 78 82 Q 85 80 92 82"
-          stroke="#5D4037"
+          stroke="#0D1642"
           strokeWidth="2.5"
           fill="none"
           strokeLinecap="round"
         />
         <path
           d="M 108 82 Q 115 80 122 82"
-          stroke="#5D4037"
+          stroke="#0D1642"
           strokeWidth="2.5"
           fill="none"
           strokeLinecap="round"
