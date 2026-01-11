@@ -5,7 +5,8 @@ A bold, no-BS sales consulting website for Russell Westgarth. Built with Next.js
 ## Quick Links
 
 📦 **New to this project?** Start here:
-- [Quick Start Guide](QUICKSTART.md) - Get live in 15 minutes
+- 🚀 **[DEPLOY NOW - Step-by-Step](DEPLOY_NOW.md)** - Deploy your site in 20 minutes (recommended)
+- [Quick Start Guide](QUICKSTART.md) - Alternative quick guide
 - [Cloudflare Setup Guide](CLOUDFLARE_SETUP.md) - Complete DNS configuration for Cloudflare
 - [Deployment Checklist](DEPLOYMENT_CHECKLIST.md) - Don't miss anything
 - [Pull Request Details](PULL_REQUEST.md) - What's been built
