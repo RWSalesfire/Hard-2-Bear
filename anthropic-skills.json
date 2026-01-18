@@ -1,0 +1,24 @@
+{
+  "name": "hard-to-bear-skills",
+  "owner": {
+    "name": "Russell Westgarth",
+    "email": "russell@hardtobear.co.uk"
+  },
+  "metadata": {
+    "description": "Custom agentic skills for Hard To Bear sales consulting",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "sales-consulting-skills",
+      "description": "Collection of sales consulting skills for process-driven sales operations",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/sales-consultant",
+        "./skills/client-proposal",
+        "./skills/discovery-call"
+      ]
+    }
+  ]
+}
