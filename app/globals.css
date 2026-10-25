@@ -825,8 +825,6 @@ textarea {
   height: 460px;
   padding: 40px 16px 0;
   border-radius: var(--radius);
-  /* The client's own colour, so the work reads as theirs. */
-  background: #8c2a1e;
   overflow: hidden;
 }
 
@@ -894,18 +892,18 @@ textarea {
 
 @media (min-width: 900px) {
   .hb-work {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hb-work__next {
+    grid-column: 1 / -1;
+    min-height: 0;
   }
   .hb-work__media {
     height: 620px;
     padding-top: 64px;
   }
   .hb-work__shot {
-    width: 30%;
-  }
-  .hb-work__shot:nth-child(3) {
-    display: block;
-    margin-top: 96px;
+    width: 42%;
   }
   .hb-work__next {
     padding: 40px;

@@ -123,6 +123,12 @@ function ArrowButton({ href, children, variant = '' }: { href: string; children:
   );
 }
 
+// Concept sites. Each card sits on that client's own colour, so the work reads as theirs.
+const WORK = [
+  { href: '/concepts/the-lamplighter', name: 'The Lamplighter', kind: 'a village pub', bg: '#8c2a1e', shots: ['lamplighter-home', 'lamplighter-menu', 'lamplighter-visit'] },
+  { href: '/concepts/bridge-street-garage', name: 'Bridge Street Garage', kind: 'an independent garage', bg: '#1f3a93', shots: ['garage-home', 'garage-card', 'garage-how'] },
+];
+
 export default function Home() {
   return (
     <>
@@ -221,25 +227,27 @@ export default function Home() {
               </p>
             </div>
             <div className="hb-work">
-              <Link className="hb-work__card" href="/concepts/the-lamplighter" data-reveal>
-                <div className="hb-work__media">
-                  {['lamplighter-home', 'lamplighter-menu', 'lamplighter-visit'].map((s) => (
-                    <div key={s} className="hb-work__shot">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={`/work/${s}.jpg`} alt="" width={780} height={1688} loading="lazy" />
-                    </div>
-                  ))}
-                </div>
-                <div className="hb-work__meta">
-                  <p className="hb-title">
-                    <strong>The Lamplighter</strong> &ndash; a village pub
-                  </p>
-                  <span className="hb-btn__arrow" aria-hidden="true">
-                    <Arrow size={14} />
-                  </span>
-                </div>
-                <span className="sr-only">Open the concept site</span>
-              </Link>
+              {WORK.map((w) => (
+                <Link key={w.href} className="hb-work__card" href={w.href} data-reveal>
+                  <div className="hb-work__media" style={{ background: w.bg }}>
+                    {w.shots.map((s) => (
+                      <div key={s} className="hb-work__shot">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={`/work/${s}.jpg`} alt="" width={780} height={1688} loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="hb-work__meta">
+                    <p className="hb-title">
+                      <strong>{w.name}</strong> &ndash; {w.kind}
+                    </p>
+                    <span className="hb-btn__arrow" aria-hidden="true">
+                      <Arrow size={14} />
+                    </span>
+                  </div>
+                  <span className="sr-only">Open the concept site</span>
+                </Link>
+              ))}
               <a className="hb-work__next" href="#stool" data-reveal>
                 <p className="hb-label" style={{ color: 'var(--honey)' }}>
                   Next up
@@ -247,7 +255,7 @@ export default function Home() {
                 <p className="hb-heading">
                   Your business <em>here.</em>
                 </p>
-                <p className="hb-soft">Garages, driving instructors and barbers are next on the bench.</p>
+                <p className="hb-soft">Driving instructors and barbers are next on the bench.</p>
                 <span className="hb-btn" style={{ justifySelf: 'start' }}>
                   Pull up a stool
                   <span className="hb-btn__arrow">
@@ -432,6 +440,7 @@ export default function Home() {
             <a href="#prices">Prices</a>
             <a href="#questions">Questions</a>
             <Link href="/concepts/the-lamplighter">The Lamplighter</Link>
+            <Link href="/concepts/bridge-street-garage">Bridge Street Garage</Link>
             <a href="#stool">Pull up a stool</a>
           </nav>
         </div>
