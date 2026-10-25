@@ -8,7 +8,9 @@ description: Hard To Bear's own playbook for selling and building websites for l
 This is the house way of selling and building sites. Version 0.1 is a draft written before the first real build, so it will be wrong in places. After every build, add what was learned to `references/build-log.md` and fix this file to match. This is how a 20-hour build becomes an 8-hour one.
 
 Business context (offer, prices, voice): read `.claude/product-marketing.md` first.
-Business-type specifics: read `references/verticals.md` for the business being built.
+Business-type specifics: read the full research brief for the trade in `docs/verticals/` (`garages.md`, `pubs.md`; more to come) before any design or build work. `references/verticals.md` is the short summary. If no brief exists for the trade, write one first.
+
+Design uniqueness: read `docs/design-register.md`. A new site must not reuse another site's palette, type pairing, hero idea or signature feature. Add the new site's entry once its design is approved.
 
 ## What we sell, in one line
 
