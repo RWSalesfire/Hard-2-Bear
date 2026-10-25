@@ -10,6 +10,9 @@ export const PUB = {
   phoneHref: 'tel:+441234567890',
   mapsHref: 'https://maps.google.com/?q=The+Lamplighter',
   bookHref: '#book',
+  // Map pin for the weather line. A made-up pub, so this is Ashby-de-la-Zouch.
+  lat: 52.746,
+  lng: -1.476,
 };
 
 /** Opening hours, 0 = Sunday. Times are minutes after midnight; a close past 24:00 runs into the next day. */

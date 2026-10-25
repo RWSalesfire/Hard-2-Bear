@@ -4,6 +4,8 @@ import OpenNow from './OpenNow';
 import MenuTabs from './MenuTabs';
 import HireForm from './HireForm';
 import Motion from './Motion';
+import TimeToggle from './TimeToggle';
+import Weather from './Weather';
 import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PACKAGES, PUB, ROOMS, TICKER } from './data';
 
 const STATEMENT = 'Proper pub. Proper food. Proper welcome.';
@@ -60,7 +62,7 @@ export default function Lamplighter() {
     <>
       <Motion />
       <p className="lp-concept">
-        Concept site by <Link href="/">Hard To Bear</Link>. The Lamplighter isn&rsquo;t a real pub.
+        Concept site by <Link href="/">Hard To Bear</Link>. The Lamplighter isn&rsquo;t a real pub. <TimeToggle />
       </p>
 
       <header className="lp-bar">
@@ -84,6 +86,7 @@ export default function Lamplighter() {
             <Photo id="lpHero" priority width={2000} height={1400} />
             <span className="lp-hero__glow" aria-hidden="true" />
           </div>
+          <Weather />
           <div className="lp-hero__text">
             <h1 id="lp-title" className="lp-hero__title">
               <span className="lp-hero__line">
@@ -161,7 +164,7 @@ export default function Lamplighter() {
           </div>
         </section>
 
-        <section className="lp-garden" aria-labelledby="garden-title">
+        <section id="garden" className="lp-garden" aria-labelledby="garden-title">
           <div className="lp-garden__media" data-reveal>
             <Photo id="lpGarden" width={1600} height={1200} />
           </div>
