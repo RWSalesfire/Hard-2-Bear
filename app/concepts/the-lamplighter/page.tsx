@@ -2,8 +2,9 @@ import Link from 'next/link';
 import Photo from '@/components/Photo';
 import OpenNow from './OpenNow';
 import MenuTabs from './MenuTabs';
+import HireForm from './HireForm';
 import Motion from './Motion';
-import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PUB } from './data';
+import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PACKAGES, PUB, ROOMS } from './data';
 
 function Arrow() {
   return (
@@ -33,6 +34,17 @@ const jsonLd = {
   address: { '@type': 'PostalAddress', streetAddress: PUB.street, addressLocality: PUB.town, postalCode: PUB.postcode, addressCountry: 'GB' },
   servesCuisine: 'British',
   acceptsReservations: true,
+  hasMenu: '/concepts/the-lamplighter#menu',
+  event: [
+    { name: 'Quiz night', byDay: 'https://schema.org/Thursday', startTime: '20:00' },
+    { name: 'Live music', byDay: 'https://schema.org/Saturday', startTime: '21:00' },
+  ].map((e) => ({
+    '@type': 'Event',
+    name: e.name,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: PUB.name, address: `${PUB.street}, ${PUB.town} ${PUB.postcode}` },
+    eventSchedule: { '@type': 'Schedule', repeatFrequency: 'P1W', byDay: e.byDay, startTime: e.startTime, scheduleTimezone: 'Europe/London' },
+  })),
   openingHoursSpecification: HOURS.map((h) => ({
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: h.day,
@@ -56,6 +68,7 @@ export default function Lamplighter() {
         <nav aria-label="Main" className="lp-bar__nav">
           <a href="#on">What&rsquo;s on</a>
           <a href="#menu">Menu</a>
+          <a href="#hire">Private hire</a>
           <a href="#visit">Visit</a>
         </nav>
         <a className="lp-btn lp-btn--small" href={PUB.bookHref}>
@@ -148,16 +161,49 @@ export default function Lamplighter() {
           </div>
           <div className="lp-book__text" data-reveal>
             <h2 id="book-title">Book a table, or the whole room</h2>
-            <p>Tables for two to twelve, and the snug for birthdays, wakes and everything in between. Up to 30 people.</p>
+            <p>Tables for two to twelve, any day. Ring us and we&rsquo;ll find you a spot by the fire.</p>
             <div className="lp-hero__actions">
               <a className="lp-btn" href={PUB.phoneHref}>
                 Call to book <Arrow />
               </a>
-              <a className="lp-btn lp-btn--ghost-dark" href={`mailto:hello@thelamplighter.example?subject=Private%20hire`}>
-                Ask about private hire
-              </a>
             </div>
+            <ul className="lp-rooms" aria-label="Rooms for private hire">
+              {ROOMS.map((r) => (
+                <li key={r.name}>
+                  <strong>{r.name}</strong>
+                  <span>{r.size}</span>
+                  <span>{r.price}</span>
+                </li>
+              ))}
+            </ul>
           </div>
+        </section>
+
+        <section id="hire" className="lp-section lp-section--split" aria-labelledby="hire-title">
+          <div className="lp-head" data-reveal>
+            <h2 id="hire-title">
+              Private <em>hire</em>
+            </h2>
+            <p>Birthdays, wakes, work dos and christenings. Tell us what you&rsquo;re planning and we&rsquo;ll come back within a day.</p>
+            <ul className="lp-packages">
+              {PACKAGES.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          </div>
+          <div data-reveal>
+            <HireForm />
+          </div>
+        </section>
+
+        <section className="lp-voucher" aria-labelledby="voucher-title">
+          <div data-reveal>
+            <h2 id="voucher-title">Give someone a round</h2>
+            <p>Gift vouchers from £10 to £100, for food, drink or a Sunday roast. Sent by email, or posted in a card.</p>
+          </div>
+          <a className="lp-btn" href={PUB.phoneHref} data-reveal>
+            Order a voucher <Arrow />
+          </a>
         </section>
 
         <section id="visit" className="lp-section lp-visit" aria-labelledby="visit-title">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { HOURS } from './data';
+import { HOURS, KITCHEN_HOURS } from './data';
 
 function fmt(mins: number) {
   const m = mins % (24 * 60);
@@ -39,17 +39,31 @@ function status() {
   return { open: false, text: `Closed. Opens ${fmt(tomorrow.open)} tomorrow` };
 }
 
+function kitchen() {
+  const { day, mins } = ukNow();
+  const slots = KITCHEN_HOURS[day];
+  const now = slots.find(([o, c]) => mins >= o && mins < c);
+  if (now) return `Kitchen open until ${fmt(now[1])}`;
+  const next = slots.find(([o]) => mins < o);
+  if (next) return `Kitchen opens at ${fmt(next[0])}`;
+  return 'Kitchen closed for today';
+}
+
 export default function OpenNow() {
-  const [s, setS] = useState<{ open: boolean; text: string } | null>(null);
+  const [s, setS] = useState<{ open: boolean; text: string; kitchen: string } | null>(null);
   useEffect(() => {
-    setS(status());
-    const t = window.setInterval(() => setS(status()), 60_000);
+    const tick = () => setS({ ...status(), kitchen: kitchen() });
+    tick();
+    const t = window.setInterval(tick, 60_000);
     return () => window.clearInterval(t);
   }, []);
   return (
-    <p className={`lp-open${s ? (s.open ? ' is-open' : ' is-closed') : ''}`} aria-live="polite">
-      <span className="lp-open__dot" aria-hidden="true" />
-      {s ? s.text : 'Open every day from 12'}
-    </p>
+    <div className="lp-status" aria-live="polite">
+      <p className={`lp-open${s ? (s.open ? ' is-open' : ' is-closed') : ''}`}>
+        <span className="lp-open__dot" aria-hidden="true" />
+        {s ? s.text : 'Open every day from 12'}
+      </p>
+      <p className="lp-kitchen">{s ? s.kitchen : 'Food served every day'}</p>
+    </div>
   );
 }

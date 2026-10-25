@@ -618,3 +618,186 @@
 .lp-hero__media .photo {
   object-position: 52% 78%;
 }
+
+/* Kitchen status, under the open-now pill */
+.lp-status {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.lp-kitchen {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Diet markers and allergen line */
+.lp-diets {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.lp-diet {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #e0e7d3;
+  color: #2f4a22;
+  font-family: var(--lp-sans), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lp-menu__allergens {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--lp-ink-soft);
+}
+
+/* Rooms list in the booking card */
+.lp-rooms {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-rooms li {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 15px;
+}
+
+.lp-rooms strong {
+  font-family: var(--lp-serif), Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* Private hire packages and form */
+.lp-packages {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-packages li::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--lp-red);
+  vertical-align: middle;
+}
+
+.lp-form {
+  display: grid;
+  gap: 14px;
+  padding: 24px 20px;
+  border-radius: var(--lp-radius);
+  background: var(--lp-cream-2);
+}
+
+.lp-form__row {
+  display: grid;
+  gap: 14px;
+}
+
+.lp-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lp-form input,
+.lp-form select,
+.lp-form textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(28, 26, 23, 0.18);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--lp-ink);
+  font: inherit;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.lp-form textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.lp-form .lp-btn {
+  justify-self: start;
+  border: 0;
+  cursor: pointer;
+}
+
+.lp-form__done {
+  padding: 24px;
+  border-radius: var(--lp-radius);
+  background: var(--lp-cream-2);
+  font-weight: 500;
+}
+
+/* Gift vouchers */
+.lp-voucher {
+  display: grid;
+  gap: 20px;
+  align-items: center;
+  margin: 96px 8px 0;
+  padding: 36px 24px;
+  border-radius: 28px;
+  background: var(--lp-red);
+  color: #fff;
+}
+
+.lp-voucher h2 {
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 1;
+}
+
+.lp-voucher p {
+  margin-top: 10px;
+  max-width: 46ch;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.lp-voucher .lp-btn {
+  justify-self: start;
+  background: #fff;
+}
+
+.lp .lp-voucher .lp-btn {
+  color: var(--lp-red);
+}
+
+@media (min-width: 760px) {
+  .lp-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lp-rooms {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .lp-voucher {
+    grid-template-columns: 1fr auto;
+    margin: 140px 12px 0;
+    padding: 56px 48px;
+  }
+}

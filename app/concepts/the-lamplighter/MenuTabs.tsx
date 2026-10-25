@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { MENU } from './data';
+import { DIET_LABELS, MENU } from './data';
 
 gsap.registerPlugin(useGSAP);
 
@@ -64,11 +64,24 @@ export default function MenuTabs() {
               <span className="lp-dish__name">
                 {d.name}
                 {d.note && <span className="lp-dish__note">{d.note}</span>}
+                {d.diet && (
+                  <span className="lp-diets">
+                    {d.diet.map((t) => (
+                      <abbr key={t} className="lp-diet" title={DIET_LABELS[t]}>
+                        {t}
+                      </abbr>
+                    ))}
+                  </span>
+                )}
               </span>
               <span className="lp-dish__price">{d.price}</span>
             </li>
           ))}
         </ul>
+        <p className="lp-menu__allergens">
+          V vegetarian · VG vegan · GF gluten-free. Tell us about any allergies when you order. Our full allergen guide is
+          behind the bar, and we&rsquo;ll happily talk you through it.
+        </p>
       </div>
     </div>
   );
