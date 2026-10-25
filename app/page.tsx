@@ -1,602 +1,422 @@
-'use client';
+import SpecialsBoard from '@/components/SpecialsBoard';
+import TradeTabs from '@/components/TradeTabs';
+import BeerMats from '@/components/BeerMats';
+import StoolForm from '@/components/StoolForm';
+import ChatterDiagram from '@/components/ChatterDiagram';
+import Reveal from '@/components/Reveal';
+import { BackBar, BarTop, BearLandlord, BearMark, Stool } from '@/components/Drawings';
 
-import { motion } from 'framer-motion';
-import BearMascot from '@/components/BearMascot';
-import { FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
-import { useState } from 'react';
+const CONTACT_EMAIL = 'hello@hardtobear.uk';
+
+const NAV = [
+  { href: '#trades', label: 'Trades' },
+  { href: '#how', label: 'How it works' },
+  { href: '#prices', label: 'Prices' },
+  { href: '#questions', label: 'Questions' },
+];
+
+const FAQS = [
+  {
+    q: 'Do I need a website? I get by on word of mouth.',
+    a: 'Word of mouth reaches people who already know you. Everyone else types “near me” into their phone, and Google shows the businesses with a proper listing and a site behind it. If you’ve got all the work you want, you don’t. If you want more, that’s where it comes from.',
+  },
+  {
+    q: 'Why not just do it myself on Wix?',
+    a: 'You can. You’ll lose your evenings to it, and it won’t sort your Google listing, your reviews or the bits that get you found. We do all of that, and when something needs changing you send a text instead of logging in.',
+  },
+  {
+    q: 'Do I own it?',
+    a: 'Yes. Your domain is registered in your name, and if you ever leave, the site goes with you.',
+  },
+  {
+    q: 'What happens once it’s live?',
+    a: 'On the care plan you text us changes and they go live the same day. Every month you get one page showing the calls, direction requests and bookings the site brought in.',
+  },
+  {
+    q: 'Seven days. Really?',
+    a: 'Seven days from when we get your words and photos. If we miss it, your first month of the care plan is on us. That’s the last orders guarantee.',
+  },
+  {
+    q: 'I’m not techy. Is that a problem?',
+    a: 'That’s the whole point. You never have to log in to anything. If you can send a text, you can run your website.',
+  },
+];
+
+const MARK: { ch: string; h: number; tone: 'brass' | 'paper' | 'green' }[] = [
+  { ch: 'H', h: 1, tone: 'brass' },
+  { ch: 'A', h: 0.82, tone: 'paper' },
+  { ch: 'R', h: 0.94, tone: 'brass' },
+  { ch: 'D', h: 0.7, tone: 'green' },
+  { ch: 'T', h: 0.88, tone: 'paper' },
+  { ch: 'O', h: 0.64, tone: 'brass' },
+  { ch: 'B', h: 0.96, tone: 'green' },
+  { ch: 'E', h: 0.76, tone: 'brass' },
+  { ch: 'A', h: 0.9, tone: 'paper' },
+  { ch: 'R', h: 1, tone: 'brass' },
+];
+
+const TONES = {
+  brass: { fill: '#c9a45a', ink: '#181512' },
+  paper: { fill: '#e4e2dd', ink: '#181512' },
+  green: { fill: '#1e4a3b', ink: '#ffffff' },
+};
+
+/** The wordmark built from blocks: one row on wide screens, HARD TO over BEAR on a phone. */
+function FooterMark() {
+  const words = [[0, 1, 2, 3], [4, 5], [6, 7, 8, 9]];
+  const block = (idx: number, x: number, w: number, base: number, tall: number) => {
+    const m = MARK[idx];
+    const h = tall * m.h;
+    const t = TONES[m.tone];
+    return (
+      <g key={`${idx}-${x}-${base}`}>
+        <rect x={x} y={base - h} width={w} height={h} fill={t.fill} />
+        <text x={x + w / 2} y={base - 14} textAnchor="middle" fontSize={w * 0.72} fontWeight={500} fill={t.ink} style={{ fontFamily: "var(--font-text), sans-serif" }}>
+          {m.ch}
+        </text>
+      </g>
+    );
+  };
+  // Wide: 10 blocks and two word gaps across 1200.
+  const W = 1200, gap = 4, wordGap = 36, bw = (W - 7 * gap - 2 * wordGap) / 10;
+  let x = 0;
+  const wide = words.flatMap((word, wi) => {
+    const out = word.map((idx, k) => {
+      const g = block(idx, x, bw, 300, 300);
+      x += bw + (k < word.length - 1 ? gap : 0);
+      return g;
+    });
+    if (wi < words.length - 1) x += wordGap;
+    return out;
+  });
+  // Phone: HARD TO on the first row, BEAR on the second.
+  const pw = 600, pbw = (pw - 4 * gap - 24) / 6;
+  let px = 0;
+  const row1 = [0, 1, 2, 3, 4, 5].map((idx, k) => {
+    const g = block(idx, px, pbw, 150, 140);
+    px += pbw + (k === 3 ? 24 : gap);
+    return g;
+  });
+  const bw2 = (pw - 3 * gap) / 4;
+  const row2 = [6, 7, 8, 9].map((idx, k) => block(idx, k * (bw2 + gap), bw2, 306, 150));
+  return (
+    <div className="footer__mark">
+      <svg className="footer__mark-wide" viewBox="0 0 1200 300" role="img" aria-label="Hard To Bear">
+        {wide}
+      </svg>
+      <svg className="footer__mark-phone" viewBox="0 0 600 306" role="img" aria-label="Hard To Bear">
+        {row1}
+        {row2}
+      </svg>
+    </div>
+  );
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Hard To Bear',
+  description: 'Websites for pubs, garages, driving instructors, barbers and other local trades.',
+  url: 'https://hardtobear.uk',
+  email: CONTACT_EMAIL,
+  founder: { '@type': 'Person', name: 'Russell Westgarth' },
+  areaServed: 'GB',
+  makesOffer: [
+    { '@type': 'Offer', name: 'Starter', price: '1500', priceCurrency: 'GBP' },
+    { '@type': 'Offer', name: 'Local Pro', price: '2400', priceCurrency: 'GBP' },
+    { '@type': 'Offer', name: 'Full Works', price: '3600', priceCurrency: 'GBP' },
+  ],
+};
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    teamSize: '',
-    problem: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', company: '', teamSize: '', problem: '' });
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
-  };
-
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-light via-primary to-primary-dark text-white px-4 py-20">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex justify-center mb-8"
-          >
-            <BearMascot size="large" />
-          </motion.div>
+    <>
+      <a className="skip" href="#main">
+        Skip to the page
+      </a>
+      <Reveal />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold mb-6 text-balance"
-          >
-            The Truth About Your Sales Team Is Hard To Bear
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed"
-          >
-            But someone needs to say it. Most sales teams aren&apos;t broken because of bad people - they&apos;re broken because of no process, no structure, and a lot of hope. Let&apos;s fix that.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <a
-              href="#contact"
-              className="inline-block bg-accent hover:bg-accent-dark text-white font-bold text-lg px-10 py-5 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
-            >
-              Get a Free Sales Reality Check
-            </a>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 text-lg opacity-90"
-          >
-            Russell Westgarth | Hard To Bear Consulting
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Hard Truths Section */}
-      <section id="hard-truths" className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-secondary"
-          >
-            Is This Hard To Bear?
-          </motion.h2>
-
-          <div className="grid gap-8 md:grid-cols-2">
-            {[
-              "Your top rep is crushing it. Your bottom three can't hit quota. You call this 'performance management'",
-              "Your CRM is a graveyard of stale opportunities and fictional close dates",
-              "You hired two more salespeople thinking it would solve the revenue problem. It didn't.",
-              "Your sales 'process' is whatever each rep feels like doing that day",
-              "You can't forecast next quarter with any confidence because pipeline is fiction",
-              "Onboarding a new rep takes 6 months and they still don't know what they're doing"
-            ].map((truth, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-charcoal-light/5 p-8 rounded-lg border-l-4 border-primary"
-              >
-                <p className="text-xl font-semibold text-charcoal leading-relaxed">
-                  {truth}
-                </p>
-              </motion.div>
+      <header className="top">
+        <a className="top__mark" href="#main" aria-label="Hard To Bear, back to the top">
+          <BearMark />
+        </a>
+        <nav className="top__links" aria-label="Main">
+          <ul>
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a className="link" href={n.href}>
+                  {n.label}
+                </a>
+              </li>
             ))}
-          </div>
-
-          <motion.p
-            {...fadeInUp}
-            className="text-2xl md:text-3xl font-bold text-center mt-16 text-primary"
-          >
-            This isn&apos;t a people problem. It&apos;s a structure problem. And structure is fixable.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4 bg-secondary text-white">
-        <div className="max-w-6xl mx-auto">
-          <motion.p
-            {...fadeInUp}
-            className="text-xl md:text-2xl mb-16 text-center max-w-4xl mx-auto leading-relaxed"
-          >
-            I help SME sales leaders build sales operations that don&apos;t rely on superhero reps or blind hope. Process-driven, metrics-focused, no fluff.
-          </motion.p>
-
-          <div className="grid gap-12 md:grid-cols-3">
-            {[
-              {
-                title: "Sales Process That Actually Gets Followed",
-                points: [
-                  "Build a repeatable methodology your team uses (not some binder that sits on a shelf)",
-                  "Document what good looks like at every stage",
-                  "Create playbooks that scale when you hire"
-                ]
-              },
-              {
-                title: "Team Structure That Drives Performance",
-                points: [
-                  "Right roles, right comp plans, right accountability",
-                  "Performance frameworks that separate coaching from firing",
-                  "Metrics that predict revenue, not vanity numbers"
-                ]
-              },
-              {
-                title: "Pipeline You Can Actually Trust",
-                points: [
-                  "CRM hygiene that sticks",
-                  "Forecasting models based on reality",
-                  "Activity metrics that tell you what's really happening"
-                ]
-              }
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white/10 backdrop-blur-sm p-8 rounded-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
-              >
-                <h3 className="text-2xl font-bold mb-6 text-accent">
-                  {service.title}
-                </h3>
-                <ul className="space-y-4">
-                  {service.points.map((point, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-accent mr-3 text-xl font-bold">•</span>
-                      <span className="text-lg leading-relaxed">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+          </ul>
+        </nav>
+        <a className="button top__action" href="#stool">
+          Pull up a stool
+        </a>
+        <details className="top__menu">
+          <summary>Menu</summary>
+          <ul>
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a href={n.href}>{n.label}</a>
+              </li>
             ))}
+            <li>
+              <a href="#stool">Pull up a stool</a>
+            </li>
+          </ul>
+        </details>
+      </header>
+
+      <main id="main">
+        {/* Hero: two-by-two board. The specials board takes the place of the first photograph. */}
+        <section className="hero" aria-label="Hard To Bear">
+          <div className="tile hero__name">
+            <h1 className="display">Hard To Bear</h1>
           </div>
-        </div>
-      </section>
-
-      {/* Why Hard To Bear Section */}
-      <section id="why" className="py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.div {...fadeInUp} className="flex justify-center mb-8">
-            <BearMascot size="medium" />
-          </motion.div>
-
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-12 text-secondary"
-          >
-            Why Hard To Bear?
-          </motion.h2>
-
-          <motion.div
-            {...fadeInUp}
-            className="prose prose-lg max-w-none"
-          >
-            <p className="text-xl leading-relaxed mb-6 text-charcoal">
-              &quot;Hard To Bear&quot; comes from rugby. When a teammate made a mistake, you&apos;d call it out - &quot;ah mate, that&apos;s hard to bear&quot; - but always with empathy. You wanted them to do better because you were on the same team.
-            </p>
-            <p className="text-xl leading-relaxed mb-6 text-charcoal">
-              That&apos;s how I approach sales consulting. I&apos;ll tell you the uncomfortable truths about your sales operation. Not to embarrass you, but because I genuinely want you to win. And you can&apos;t win if everyone&apos;s just being polite about the problems.
-            </p>
-            <p className="text-xl leading-relaxed text-charcoal italic">
-              (Also, my mam used to call me Rusty Bear when I was little. So there&apos;s that.)
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* About Russell Section */}
-      <section id="about" className="py-20 px-4 bg-charcoal text-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-12"
-          >
-            About Russell
-          </motion.h2>
-
-          <motion.div {...fadeInUp} className="space-y-6 text-lg leading-relaxed">
-            <p>
-              <strong className="text-accent">Background:</strong> 4 years in media sales (radio, OOH, TV) selling to every type of SME imaginable. Flooring companies, dentists, law firms. Currently at Salesfire (B2B SaaS, eCommerce optimisation). Seen what works and what&apos;s a waste of time across industries.
-            </p>
-            <p>
-              Built this consultancy because too many good SMEs are winging their sales operations.
-            </p>
-            <p>
-              <strong className="text-accent">Approach:</strong> Direct but not a dick about it. Process-driven but flexible to your business. Metrics that matter, not vanity dashboards. Built for SMEs, not enterprise theatre.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* How We Work Section */}
-      <section id="how-we-work" className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-secondary"
-          >
-            How We Work
-          </motion.h2>
-
-          <div className="grid gap-8 md:grid-cols-3 mb-16">
-            {[
-              {
-                title: "Option 1: Sales Reality Check",
-                duration: "2-3 weeks",
-                description: "Deep dive into your current state. What's working, what's broken, what to fix first.",
-                deliverable: "Prioritised roadmap with no BS recommendations."
-              },
-              {
-                title: "Option 2: Build The Engine",
-                duration: "2-3 months",
-                description: "Design and implement your sales process, playbooks, and performance frameworks.",
-                deliverable: "A sales operation that runs without you micromanaging."
-              },
-              {
-                title: "Option 3: Fractional Sales Leadership",
-                duration: "Ongoing",
-                description: "Embedded support 1-2 days/week. Strategy, coaching, accountability.",
-                deliverable: "Consistent execution and improvement."
-              }
-            ].map((option, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-gradient-to-br from-primary-light to-primary p-8 rounded-lg text-white hover:scale-105 transition-transform duration-300"
-              >
-                <h3 className="text-2xl font-bold mb-3">{option.title}</h3>
-                <p className="text-lg opacity-90 mb-4">{option.duration}</p>
-                <p className="mb-4 leading-relaxed">{option.description}</p>
-                <p className="font-semibold">
-                  <span className="text-accent">Deliverable:</span> {option.deliverable}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            {...fadeInUp}
-            className="bg-secondary/5 p-8 rounded-lg border-2 border-secondary"
-          >
-            <h3 className="text-2xl font-bold mb-6 text-secondary">Process:</h3>
-            <ol className="space-y-4 text-lg">
-              <li className="flex items-start">
-                <span className="font-bold text-primary mr-4 text-xl">1.</span>
-                <span>Free 30-min call (no pitch, just honesty about fit)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="font-bold text-primary mr-4 text-xl">2.</span>
-                <span>Reality check audit (if needed)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="font-bold text-primary mr-4 text-xl">3.</span>
-                <span>Proposal</span>
-              </li>
-              <li className="flex items-start">
-                <span className="font-bold text-primary mr-4 text-xl">4.</span>
-                <span>Implementation</span>
-              </li>
-              <li className="flex items-start">
-                <span className="font-bold text-primary mr-4 text-xl">5.</span>
-                <span className="font-bold">You actually hit your numbers</span>
-              </li>
-            </ol>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Who This Is For Section */}
-      <section id="who-for" className="py-20 px-4 bg-charcoal-light text-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-16"
-          >
-            Who This Is For
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-green-600/20 border-2 border-green-500 p-8 rounded-lg"
-            >
-              <h3 className="text-3xl font-bold mb-6 text-green-400">Best Fit:</h3>
-              <ul className="space-y-4 text-lg">
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-3 text-xl">✓</span>
-                  <span>SMEs with 2-10 salespeople, £500K-£10M revenue</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-3 text-xl">✓</span>
-                  <span>You know something&apos;s broken but not sure what</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-3 text-xl">✓</span>
-                  <span>Willing to change how things work</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-3 text-xl">✓</span>
-                  <span>Ready to invest in getting it right</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-red-600/20 border-2 border-red-500 p-8 rounded-lg"
-            >
-              <h3 className="text-3xl font-bold mb-6 text-red-400">Not For You If:</h3>
-              <ul className="space-y-4 text-lg">
-                <li className="flex items-start">
-                  <span className="text-red-400 mr-3 text-xl">✗</span>
-                  <span>You want quick fixes or silver bullets</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-red-400 mr-3 text-xl">✗</span>
-                  <span>You&apos;re not willing to hold your team accountable</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-red-400 mr-3 text-xl">✗</span>
-                  <span>You think more activity equals more revenue (it doesn&apos;t)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-red-400 mr-3 text-xl">✗</span>
-                  <span>You&apos;re looking for someone to just tell you you&apos;re doing great</span>
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gradient-to-br from-primary to-primary-dark text-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.div {...fadeInUp} className="flex justify-center mb-8">
-            <BearMascot size="medium" />
-          </motion.div>
-
-          <motion.h2
-            {...fadeInUp}
-            className="text-4xl md:text-5xl font-bold text-center mb-6"
-          >
-            Get Your Free Sales Reality Check
-          </motion.h2>
-
-          <motion.p
-            {...fadeInUp}
-            className="text-xl text-center mb-12 max-w-3xl mx-auto"
-          >
-            No 47-slide deck. No &apos;discovery process.&apos; Just a straight conversation about whether your sales operation is actually set up to scale.
-          </motion.p>
-
-          <motion.form
-            {...fadeInUp}
-            onSubmit={handleSubmit}
-            className="bg-white/10 backdrop-blur-sm p-8 rounded-lg border border-white/20 mb-12"
-          >
-            <div className="grid gap-6">
-              <div>
-                <label htmlFor="name" className="block text-lg font-semibold mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-lg font-semibold mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="your.email@company.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="company" className="block text-lg font-semibold mb-2">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  required
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Company name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="teamSize" className="block text-lg font-semibold mb-2">
-                  Sales Team Size
-                </label>
-                <input
-                  type="text"
-                  id="teamSize"
-                  required
-                  value={formData.teamSize}
-                  onChange={(e) => setFormData({ ...formData, teamSize: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="e.g., 5 reps"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="problem" className="block text-lg font-semibold mb-2">
-                  What&apos;s Actually Broken (be honest)
-                </label>
-                <textarea
-                  id="problem"
-                  required
-                  value={formData.problem}
-                  onChange={(e) => setFormData({ ...formData, problem: e.target.value })}
-                  rows={5}
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                  placeholder="Tell me what's not working..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-accent hover:bg-accent-dark disabled:bg-gray-500 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 shadow-xl"
-              >
-                {isSubmitting ? 'Sending...' : 'Request Reality Check'}
-              </button>
-
-              {submitStatus === 'success' && (
-                <p className="text-green-300 text-center font-semibold">
-                  Thanks! I&apos;ll get back to you within 24 hours.
-                </p>
-              )}
-
-              {submitStatus === 'error' && (
-                <p className="text-red-300 text-center font-semibold">
-                  Something went wrong. Email me directly at russell@hardtobear.co.uk
-                </p>
-              )}
+          <SpecialsBoard />
+          {/* PHOTO SLOT: replace with a real photo of the brother's back bar. */}
+          <div className="tile hero__bar shutter" data-photo-slot="hero-back-bar">
+            <div className="shutter__in">
+              <BackBar />
             </div>
-          </motion.form>
+          </div>
+          <div className="hero__pair">
+            <div className="tile">
+              <p>Websites for pubs, garages, driving instructors and barbers. Fixed prices, live in seven days.</p>
+            </div>
+            <div className="tile hero__accent">
+              <p>Change anything by sending a text. It&rsquo;s live the same day.</p>
+            </div>
+          </div>
+        </section>
 
-          <motion.div
-            {...fadeInUp}
-            className="text-center space-y-6"
-          >
-            <p className="text-lg">
-              <strong>Prefer to book directly?</strong>
+        {/* Intro: statement tiles */}
+        <section className="board intro section" aria-labelledby="intro-title" data-rise>
+          <div className="tile intro__slogan">
+            <h2 id="intro-title" className="display">
+              Ask for
               <br />
-              <a
-                href="https://calendly.com/russellwestgarth"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:text-accent-light underline font-semibold"
-              >
-                Book a 30-minute call on Calendly
-              </a>
-            </p>
-
-            <div className="flex justify-center items-center gap-6 text-2xl">
-              <a
-                href="mailto:russell@hardtobear.co.uk"
-                className="hover:text-accent transition-colors duration-300"
-                aria-label="Email"
-              >
-                <FaEnvelope />
-              </a>
-              <a
-                href="https://linkedin.com/in/russellwestgarth"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://twitter.com/russellwestgarth"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent transition-colors duration-300"
-                aria-label="Twitter"
-              >
-                <FaTwitter />
-              </a>
+              Dave.
+            </h2>
+          </div>
+          <div className="tile intro__word">
+            <p className="display">7 days</p>
+          </div>
+          <div className="tile intro__search" data-ui>
+            <div className="search" aria-label="A phone search for 'mechanic near me'" role="img">
+              <p className="search__bar">mechanic near me</p>
+              <p className="search__result">
+                <strong>AutoFix Centre</strong>
+                <span>4.6 stars · 0.4 mi</span>
+              </p>
+              <p className="search__result">
+                <strong>Tyres &amp; More</strong>
+                <span>4.3 stars · 0.9 mi</span>
+              </p>
+              <p className="search__result">
+                <strong>M&amp;J Motors</strong>
+                <span>4.8 stars · 1.2 mi</span>
+              </p>
+              <p className="search__missing">Dave? Not on here.</p>
             </div>
-
-            <p className="text-sm opacity-75">
-              russell@hardtobear.co.uk | russellwestgarth.com
+          </div>
+          <div className="tile intro__text">
+            <p>
+              Half the town knows Dave fixes cars. The other half types &ldquo;mechanic near me&rdquo; into their phone and finds
+              someone else. Word of mouth built your business, and it still works, but only on people who already know you.
+              Everyone else is searching. If you&rsquo;re not on Google, with a site that loads on a phone, shows your prices
+              and lets people ring you with one tap, they never hear about you. Hard To Bear builds that site, sorts your Google
+              listing, and keeps both up to date when you text a change. You keep doing the job. We make sure the people who
+              don&rsquo;t know Dave can find him.
             </p>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Footer */}
-      <footer className="bg-charcoal-dark text-white/70 py-8 px-4 text-center">
-        <p>&copy; {new Date().getFullYear()} Hard To Bear Consulting. All rights reserved.</p>
-        <p className="mt-2 text-sm">Russell Westgarth | No-BS Sales Consulting for SMEs</p>
+        {/* Trades: tabs and bands */}
+        <section id="trades" className="section" aria-labelledby="trades-title">
+          <div className="trades__headrow" data-rise>
+            <h2 id="trades-title">
+              <span className="soft">Pick your trade.</span>
+              <br />
+              See what you get.
+            </h2>
+            <a className="button" href="#stool">
+              Pull up a stool
+            </a>
+          </div>
+          <TradeTabs />
+        </section>
+
+        {/* How it works: chatter into bookings */}
+        <section id="how" className="board section" aria-labelledby="how-title">
+          <div className="how__head" data-rise>
+            <h2 id="how-title">
+              From gossip
+              <br />
+              to bookings
+            </h2>
+            <p>
+              Your customers already talk about you. The site catches that chatter, puts it where Google can see it, and turns
+              it into calls and bookings you can count.
+            </p>
+          </div>
+          <div className="how__figure">
+            <ChatterDiagram />
+            <div className="how__steps-v">
+              <div>
+                <h3>Chatter</h3>
+                <p>People mention you at the bar. Nobody writes it down.</p>
+              </div>
+              <div>
+                <h3>Caught</h3>
+                <p>Your site and Google listing hold it: prices, reviews, the lot.</p>
+              </div>
+              <div>
+                <h3>Booked</h3>
+                <p>Strangers find you, ring you and book. You get the count every month.</p>
+              </div>
+            </div>
+          </div>
+          <div className="how__steps" data-rise>
+            <div>
+              <h3>Chatter</h3>
+              <p>People mention you at the bar. Nobody writes it down.</p>
+            </div>
+            <div>
+              <h3>Caught</h3>
+              <p>Your site and Google listing hold it: prices, reviews, the lot.</p>
+            </div>
+            <div>
+              <h3>Booked</h3>
+              <p>Strangers find you, ring you and book. You get the count every month.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Prices: beer mats */}
+        <section id="prices" className="board section" aria-labelledby="prices-title">
+          <div className="prices__head" data-rise>
+            <h2 id="prices-title">Prices on the mat</h2>
+            <p>Fixed prices, written down. Turn a mat over to see exactly what&rsquo;s in it.</p>
+          </div>
+          <BeerMats />
+        </section>
+
+        {/* About: the landlord */}
+        <section id="landlord" className="board section" aria-labelledby="landlord-title">
+          <div className="about__head" data-rise>
+            <h2 id="landlord-title">The landlord</h2>
+            <p>
+              Hard To Bear is Russell Westgarth. He&rsquo;s spent his career in sales, so he builds websites that bring in work,
+              not ones that just look nice. You deal with him from the first chat to the monthly report.
+            </p>
+          </div>
+          {/* PHOTO SLOT: replace with a photo of Russell behind the bar. */}
+          <figure className="tile about__photo" data-photo-slot="about-russell">
+            <BarTop />
+            <figcaption className="about__note">
+              The first site is his brother&rsquo;s pub, opening in December. Yours could be next.
+            </figcaption>
+          </figure>
+          <div className="about__side">
+            <div className="tile about__bear">
+              <BearLandlord />
+            </div>
+            <dl className="about__facts">
+              <div>
+                <dt>Replies</dt>
+                <dd>Same day</dd>
+              </div>
+              <div>
+                <dt>Live in</dt>
+                <dd>Seven days</dd>
+              </div>
+              <div>
+                <dt>Your domain</dt>
+                <dd>Always yours</dd>
+              </div>
+              <div>
+                <dt>A chat costs</dt>
+                <dd>Nothing</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        {/* Questions: a band per question */}
+        <section id="questions" className="faq" aria-labelledby="questions-title">
+          <div className="faq__title">
+            <h2 id="questions-title">Asked at the bar</h2>
+          </div>
+          <div>
+            {FAQS.map((f) => (
+              <div key={f.q} className="faq__band">
+                <h3>{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Call to action: the action tile */}
+        <section id="stool" className="cta" aria-labelledby="stool-title">
+          {/* PHOTO SLOT: replace with a photo of a real bar stool or the pub door. */}
+          <div className="tile cta__flank cta__flank--left" data-photo-slot="cta-stool">
+            <Stool />
+          </div>
+          <div className="tile cta__main">
+            <h2 id="stool-title">Pull up a stool</h2>
+            <p>
+              Fifteen minutes, in person or on the phone. Tell us about your trade and we&rsquo;ll tell you straight whether a
+              website is worth it.
+            </p>
+            <StoolForm />
+            <p className="cta__guarantee">Last orders guarantee: live in seven days, or your first month of care is on us.</p>
+          </div>
+          <div className="tile cta__flank cta__flank--right" aria-hidden="true" />
+        </section>
+      </main>
+
+      <footer className="footer">
+        <FooterMark />
+        <div className="footer__links">
+          <nav className="footer__col" aria-label="Trades">
+            <h3>Trades</h3>
+            <a className="link" href="#trades">Pubs</a>
+            <a className="link" href="#trades">Garages</a>
+            <a className="link" href="#trades">Driving instructors</a>
+            <a className="link" href="#trades">Barbers</a>
+          </nav>
+          <nav className="footer__col" aria-label="This page">
+            <h3>On this page</h3>
+            {NAV.map((n) => (
+              <a key={n.href} className="link" href={n.href}>
+                {n.label}
+              </a>
+            ))}
+          </nav>
+          <div className="footer__col">
+            <h3>The landlord</h3>
+            <a className="link" href="#landlord">About Russell</a>
+            <a className="link" href="#stool">Pull up a stool</a>
+          </div>
+          <div className="footer__contact">
+            <h3 className="soft">Get in touch</h3>
+            <a className="link" href={`mailto:${CONTACT_EMAIL}?subject=Pulling%20up%20a%20stool`}>
+              {CONTACT_EMAIL}
+            </a>
+          </div>
+        </div>
+        <div className="footer__last">
+          <p>&copy; 2026 Hard To Bear</p>
+          <a className="button" href="#stool">
+            Pull up a stool
+          </a>
+        </div>
       </footer>
-    </main>
+    </>
   );
 }

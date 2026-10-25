@@ -1,44 +1,53 @@
 import type { Metadata, Viewport } from "next";
+import { Hanken_Grotesk, Kalam } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+
+const hanken = Hanken_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-text",
+  display: "swap",
+});
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-chalk",
+  display: "swap",
+});
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hardtobear.uk";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
+  themeColor: "#0c0a08",
 };
 
 export const metadata: Metadata = {
-  title: "Hard To Bear | No-BS Sales Consulting for SMEs | Russell Westgarth",
-  description: "The truth about your sales team is hard to bear. Russell Westgarth helps SME sales leaders build process-driven sales operations that don't rely on superhero reps or blind hope.",
-  keywords: ["sales consulting", "sales process", "SME sales", "sales leadership", "sales operations", "B2B sales", "sales training"],
+  metadataBase: new URL(siteUrl),
+  title: "Hard To Bear | Websites for pubs, garages and local trades",
+  description:
+    "Websites for pubs, garages, driving instructors and barbers. Fixed prices, live in seven days, and you change it by sending a text.",
   authors: [{ name: "Russell Westgarth" }],
   openGraph: {
-    title: "Hard To Bear | No-BS Sales Consulting for SMEs",
-    description: "Direct, honest sales consulting for SME leaders. Build a sales operation that actually scales.",
-    url: "https://hardtobear.co.uk",
+    title: "Hard To Bear | Websites for local trades",
+    description:
+      "Fixed prices, live in seven days, and you change it by sending a text.",
+    url: siteUrl,
     siteName: "Hard To Bear",
     locale: "en_GB",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Hard To Bear | No-BS Sales Consulting",
-    description: "Direct, honest sales consulting for SME leaders who want structure, not hope.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB">
+    <html lang="en-GB" className={`${hanken.variable} ${kalam.variable}`}>
       <body>
         <GoogleAnalytics />
         {children}
