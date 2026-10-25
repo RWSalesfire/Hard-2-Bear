@@ -1,0 +1,210 @@
+import Link from 'next/link';
+import Photo from '@/components/Photo';
+import OpenNow from './OpenNow';
+import MenuTabs from './MenuTabs';
+import Motion from './Motion';
+import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PUB } from './data';
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+      <path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function fmt(mins: number) {
+  const m = mins % (24 * 60);
+  if (m === 0) return 'midnight';
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}${mm ? `:${String(mm).padStart(2, '0')}` : ''}${h < 12 ? 'am' : 'pm'}`;
+}
+
+// Monday first, the way people read a week.
+const WEEK = [1, 2, 3, 4, 5, 6, 0].map((d) => HOURS[d]);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BarOrPub',
+  name: PUB.name,
+  telephone: PUB.phone,
+  address: { '@type': 'PostalAddress', streetAddress: PUB.street, addressLocality: PUB.town, postalCode: PUB.postcode, addressCountry: 'GB' },
+  servesCuisine: 'British',
+  acceptsReservations: true,
+  openingHoursSpecification: HOURS.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.day,
+    opens: `${String(Math.floor(h.open / 60)).padStart(2, '0')}:${String(h.open % 60).padStart(2, '0')}`,
+    closes: h.close >= 24 * 60 ? '23:59' : `${String(Math.floor(h.close / 60)).padStart(2, '0')}:${String(h.close % 60).padStart(2, '0')}`,
+  })),
+};
+
+export default function Lamplighter() {
+  return (
+    <>
+      <Motion />
+      <p className="lp-concept">
+        Concept site by <Link href="/">Hard To Bear</Link>. The Lamplighter isn&rsquo;t a real pub.
+      </p>
+
+      <header className="lp-bar">
+        <a className="lp-logo" href="#top">
+          The Lamplighter
+        </a>
+        <nav aria-label="Main" className="lp-bar__nav">
+          <a href="#on">What&rsquo;s on</a>
+          <a href="#menu">Menu</a>
+          <a href="#visit">Visit</a>
+        </nav>
+        <a className="lp-btn lp-btn--small" href={PUB.bookHref}>
+          Book a table
+        </a>
+      </header>
+
+      <main id="top">
+        <section className="lp-hero" aria-labelledby="lp-title">
+          <div className="lp-hero__media">
+            <Photo id="lpHero" priority width={2000} height={1400} />
+          </div>
+          <div className="lp-hero__text">
+            <h1 id="lp-title" className="lp-hero__title">
+              <span className="lp-hero__line">
+                <span>Your local,</span>
+              </span>
+              <span className="lp-hero__line">
+                <em>lit since 1868</em>
+              </span>
+            </h1>
+            <div className="lp-hero__meta">
+              <OpenNow />
+              <p className="lp-hero__lede">
+                Proper pub, proper food, on {PUB.street}, {PUB.town}. Dogs, muddy boots and quiz teams welcome.
+              </p>
+              <div className="lp-hero__actions">
+                <a className="lp-btn" href={PUB.bookHref}>
+                  Book a table <Arrow />
+                </a>
+                <a className="lp-btn lp-btn--ghost" href="#menu">
+                  See the menu
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="on" className="lp-section" aria-labelledby="on-title">
+          <div className="lp-head" data-reveal>
+            <h2 id="on-title">This week at the Lamp</h2>
+            <p>Three nights worth leaving the house for.</p>
+          </div>
+          <ul className="lp-events">
+            {EVENTS.map((e) => (
+              <li key={e.title} className="lp-event" data-reveal>
+                <div className="lp-event__media">
+                  <Photo id={e.photo} width={900} height={1100} />
+                </div>
+                <p className="lp-event__when">{e.when}</p>
+                <h3>{e.title}</h3>
+                <p>{e.line}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="menu" className="lp-section lp-section--split" aria-labelledby="menu-title">
+          <div className="lp-head" data-reveal>
+            <h2 id="menu-title">
+              On the <em>menu</em>
+            </h2>
+            <p>{KITCHEN}</p>
+          </div>
+          <div data-reveal>
+            <MenuTabs />
+          </div>
+        </section>
+
+        <section className="lp-garden" aria-labelledby="garden-title">
+          <div className="lp-garden__media" data-reveal>
+            <Photo id="lpGarden" width={1600} height={1200} />
+          </div>
+          <div className="lp-garden__text" data-reveal>
+            <h2 id="garden-title">Bring the dog. Stay for the sun.</h2>
+            <p>Forty seats out the back, water bowls by the door and a biscuit tin behind the bar.</p>
+            <ul className="lp-tags" aria-label="Good to know">
+              {GOOD_TO_KNOW.map((g) => (
+                <li key={g} className="lp-chip lp-chip--static">
+                  {g}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section id="book" className="lp-book" aria-labelledby="book-title">
+          <div className="lp-book__media" data-reveal>
+            <Photo id="lpRoom" width={1400} height={1000} />
+          </div>
+          <div className="lp-book__text" data-reveal>
+            <h2 id="book-title">Book a table, or the whole room</h2>
+            <p>Tables for two to twelve, and the snug for birthdays, wakes and everything in between. Up to 30 people.</p>
+            <div className="lp-hero__actions">
+              <a className="lp-btn" href={PUB.phoneHref}>
+                Call to book <Arrow />
+              </a>
+              <a className="lp-btn lp-btn--ghost-dark" href={`mailto:hello@thelamplighter.example?subject=Private%20hire`}>
+                Ask about private hire
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="visit" className="lp-section lp-visit" aria-labelledby="visit-title">
+          <div className="lp-head" data-reveal>
+            <h2 id="visit-title">Find us</h2>
+            <p>
+              {PUB.street}, {PUB.town} {PUB.postcode}. Free parking behind the pub.
+            </p>
+          </div>
+          <div className="lp-visit__grid">
+            <dl className="lp-hours" data-reveal>
+              {WEEK.map((h) => (
+                <div key={h.day}>
+                  <dt>{h.day}</dt>
+                  <dd>
+                    {fmt(h.open)} – {fmt(h.close)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <div className="lp-visit__media" data-reveal>
+              <Photo id="lpBar" width={1200} height={900} />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="lp-footer">
+        <p className="lp-footer__name">The Lamplighter</p>
+        <p>
+          {PUB.street}, {PUB.town} {PUB.postcode} · <a href={PUB.phoneHref}>{PUB.phone}</a>
+        </p>
+        <p className="lp-footer__small">
+          A concept site by <Link href="/">Hard To Bear</Link>. Names, prices and times are examples.
+        </p>
+      </footer>
+
+      {/* Phone action bar: the three things people come for. */}
+      <nav className="lp-dock" aria-label="Quick actions">
+        <a href={PUB.phoneHref}>Call</a>
+        <a href={PUB.mapsHref}>Directions</a>
+        <a href={PUB.bookHref} className="is-main">
+          Book
+        </a>
+      </nav>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    </>
+  );
+}
