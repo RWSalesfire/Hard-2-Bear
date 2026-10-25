@@ -602,7 +602,10 @@ textarea {
   margin: 14px 0;
   padding: 14px;
   border-radius: 18px;
-  background: #2a2620;
+  /* The Lamplighter's own hero photo, darkened at the bottom so the headline reads. */
+  background:
+    linear-gradient(180deg, rgba(23, 21, 18, 0) 25%, rgba(23, 21, 18, 0.85) 100%),
+    #2a2620 url('/photos/lp-hero.jpg') 50% 60% / cover;
   color: #fff;
   font-size: 24px;
   line-height: 1.05;
