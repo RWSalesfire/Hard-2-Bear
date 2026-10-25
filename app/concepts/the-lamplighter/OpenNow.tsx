@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { HOURS, KITCHEN_HOURS } from './data';
+import { HOURS, KITCHEN_HOURS, LAST_ORDERS } from './data';
 
 function fmt(mins: number) {
   const m = mins % (24 * 60);
@@ -39,6 +39,30 @@ function status() {
   return { open: false, text: `Closed. Opens ${fmt(tomorrow.open)} tomorrow` };
 }
 
+function span(mins: number) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  const hrs = h ? `${h} ${h === 1 ? 'hr' : 'hrs'}` : '';
+  const ms = m ? `${m} ${m === 1 ? 'min' : 'mins'}` : '';
+  return [hrs, ms].filter(Boolean).join(' ') || 'a moment';
+}
+
+/** "Last orders in 2 hrs 14 mins" while open; "Opens in 40 mins" when closed today. */
+function countdown() {
+  const { day, mins } = ukNow();
+  const today = HOURS[day];
+  const yesterday = HOURS[(day + 6) % 7];
+  let close: number | null = null;
+  if (yesterday.close > 24 * 60 && mins < yesterday.close - 24 * 60) close = yesterday.close - 24 * 60;
+  else if (mins >= today.open && mins < today.close) close = today.close;
+  if (close !== null) {
+    const left = close - LAST_ORDERS - mins;
+    return left > 0 ? `Last orders in ${span(left)}` : 'Last orders called';
+  }
+  if (mins < today.open) return `Opens in ${span(today.open - mins)}`;
+  return null;
+}
+
 function kitchen() {
   const { day, mins } = ukNow();
   const slots = KITCHEN_HOURS[day];
@@ -52,9 +76,12 @@ function kitchen() {
 export default function OpenNow() {
   const [s, setS] = useState<{ open: boolean; text: string; kitchen: string } | null>(null);
   useEffect(() => {
-    const tick = () => setS({ ...status(), kitchen: kitchen() });
+    const tick = () => {
+      const c = countdown();
+      setS({ ...status(), kitchen: c ? `${c} · ${kitchen()}` : kitchen() });
+    };
     tick();
-    const t = window.setInterval(tick, 60_000);
+    const t = window.setInterval(tick, 30_000);
     return () => window.clearInterval(t);
   }, []);
   return (

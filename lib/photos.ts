@@ -55,6 +55,12 @@ export const PHOTOS = {
     tone: '#33302a',
     src: '/photos/lp-room.jpg',
   },
+  lpDarts: {
+    alt: 'Two friends on bar stools, one reaching for a pint',
+    query: 'pub bar stools pint',
+    tone: '#3a2a1c',
+    src: '/photos/stool.jpg',
+  },
 } satisfies Record<string, PhotoSlot>;
 
 export type PhotoId = keyof typeof PHOTOS;

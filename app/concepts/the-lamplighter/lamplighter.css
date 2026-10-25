@@ -801,3 +801,111 @@
     padding: 56px 48px;
   }
 }
+
+/* Lights coming on: a warm bloom over the lantern */
+.lp-hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(38% 34% at 52% 32%, rgba(255, 190, 110, 0.32), rgba(255, 170, 80, 0.1) 55%, transparent 75%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The rolling what's-on strip */
+.lp-ticker {
+  overflow: hidden;
+  margin: 8px 8px 0;
+  padding: 16px 0;
+  border-radius: 20px;
+  background: var(--lp-red);
+  color: var(--lp-cream);
+  white-space: nowrap;
+}
+
+.lp-ticker__track {
+  display: inline-flex;
+  gap: 28px;
+  padding-right: 28px;
+  font-family: var(--lp-serif), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1;
+}
+
+.lp-ticker__track span::after {
+  content: '\2726';
+  margin-left: 28px;
+  font-style: normal;
+  font-size: 0.6em;
+  color: #f0c27a;
+  vertical-align: middle;
+}
+
+/* This week: a swipe row on phones, a sliding row on desktop */
+.lp-events-viewport {
+  margin-inline: calc(var(--lp-gutter) * -1);
+}
+
+.lp-events {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--lp-gutter);
+  padding: 0 var(--lp-gutter) 8px;
+  scrollbar-width: none;
+}
+
+.lp-events::-webkit-scrollbar {
+  display: none;
+}
+
+.lp-event {
+  flex: 0 0 78%;
+  scroll-snap-align: start;
+}
+
+.lp-events-viewport.is-pinned {
+  overflow: hidden;
+}
+
+.lp-events-viewport.is-pinned .lp-events {
+  overflow: visible;
+}
+
+/* The statement that fills in word by word */
+.lp-statement {
+  padding: 120px var(--lp-gutter) 0;
+}
+
+.lp-statement__text {
+  max-width: 14ch;
+  font-family: var(--lp-serif), Georgia, serif;
+  font-size: clamp(44px, 9vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 760px) {
+  .lp-events {
+    display: flex;
+    gap: 20px;
+  }
+  .lp-event {
+    flex: 0 0 min(34vw, 520px);
+  }
+  .lp-event__media {
+    aspect-ratio: 4 / 3;
+  }
+  .lp-event:nth-child(2) {
+    margin-top: 0;
+  }
+  .lp-event:nth-child(even) {
+    margin-top: 40px;
+  }
+  .lp-statement {
+    padding-top: 160px;
+  }
+}

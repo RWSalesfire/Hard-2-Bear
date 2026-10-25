@@ -4,7 +4,9 @@ import OpenNow from './OpenNow';
 import MenuTabs from './MenuTabs';
 import HireForm from './HireForm';
 import Motion from './Motion';
-import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PACKAGES, PUB, ROOMS } from './data';
+import { EVENTS, GOOD_TO_KNOW, HOURS, KITCHEN, PACKAGES, PUB, ROOMS, TICKER } from './data';
+
+const STATEMENT = 'Proper pub. Proper food. Proper welcome.';
 
 function Arrow() {
   return (
@@ -80,6 +82,7 @@ export default function Lamplighter() {
         <section className="lp-hero" aria-labelledby="lp-title">
           <div className="lp-hero__media">
             <Photo id="lpHero" priority width={2000} height={1400} />
+            <span className="lp-hero__glow" aria-hidden="true" />
           </div>
           <div className="lp-hero__text">
             <h1 id="lp-title" className="lp-hero__title">
@@ -107,11 +110,20 @@ export default function Lamplighter() {
           </div>
         </section>
 
+        <div className="lp-ticker" aria-hidden="true">
+          <div className="lp-ticker__track">
+            {[...TICKER, ...TICKER].map((t, i) => (
+              <span key={i}>{t}</span>
+            ))}
+          </div>
+        </div>
+
         <section id="on" className="lp-section" aria-labelledby="on-title">
           <div className="lp-head" data-reveal>
             <h2 id="on-title">This week at the Lamp</h2>
-            <p>Three nights worth leaving the house for.</p>
+            <p>Four nights worth leaving the house for.</p>
           </div>
+          <div className="lp-events-viewport">
           <ul className="lp-events">
             {EVENTS.map((e) => (
               <li key={e.title} className="lp-event" data-reveal>
@@ -124,6 +136,17 @@ export default function Lamplighter() {
               </li>
             ))}
           </ul>
+          </div>
+        </section>
+
+        <section className="lp-statement" aria-label={STATEMENT}>
+          <p className="lp-statement__text" aria-hidden="true">
+            {STATEMENT.split(' ').map((w, i) => (
+              <span key={i} className="lp-word">
+                {w}{' '}
+              </span>
+            ))}
+          </p>
         </section>
 
         <section id="menu" className="lp-section lp-section--split" aria-labelledby="menu-title">

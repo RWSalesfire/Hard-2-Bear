@@ -84,7 +84,22 @@ export const EVENTS = [
   { photo: 'lpQuiz' as const, when: 'Thursdays, 8pm', title: 'Quiz night', line: 'Teams of up to six. £2 a head, the pot goes to the winners.' },
   { photo: 'lpMusic' as const, when: 'Saturdays, 9pm', title: 'Live music', line: 'Local acts, acoustic sets, no cover charge.' },
   { photo: 'lpRoast' as const, when: 'Sundays, from 12', title: 'Sunday roast', line: 'Book ahead. When it’s gone, it’s gone.' },
+  { photo: 'lpDarts' as const, when: 'Mondays, 7pm', title: 'Darts and dominoes', line: 'Pub league night. The board’s free the rest of the week.' },
 ];
+
+/** The rolling strip under the hero. */
+export const TICKER = [
+  'Quiz night, Thursday 8pm',
+  'Live music, Saturday 9pm',
+  'Sunday roast from 12',
+  'Dogs welcome',
+  'Darts, Monday 7pm',
+  'Guest ale every week',
+  'Fire’s lit',
+];
+
+/** Minutes before closing that last orders are called. */
+export const LAST_ORDERS = 15;
 
 export const GOOD_TO_KNOW = ['Dogs welcome inside and out', 'Beer garden', 'Step-free entrance', 'Free parking', 'Sky and TNT Sports', 'Kids welcome until 9pm'];
 
