@@ -6,6 +6,7 @@ Every site's look in one place, so no two sites share a palette, type pairing, h
 |---|---|---|---|---|---|---|---|
 | Hard To Bear | Agency (our own) | Live | Black `#0B0B0A`, honey `#F5A524`, warm white | Archivo (wide, uppercase), one family | Huge uppercase headline beside a phone on a honey disc | Care-plan demo: a text arrives, the site updates | The name, straight talking |
 | The Lamplighter | Pub (concept) | Live at /concepts/the-lamplighter | Cream `#F4EEE3`, charcoal, oxblood `#8C2A1E` | Fraunces (soft serif) with Manrope | Full-bleed photo of the pub at night, "Your local, lit since 1868" | Live open-now pill from UK time | The name: the lamp, lit since 1868 |
+| Bridge Street Garage | Garage (concept) | Draft at /concepts/bridge-street-garage, photos to come | Paper white `#FBFBF8`, carbon blue `#1F3A93`, stamp green `#1C7C4A` | IBM Plex Sans Condensed headings, Plex Sans body, Plex Mono prices | "MOT £45. Always." beside an interactive job card | Tick the jobs, the job card adds up a fixed price and sends it by text | The job card and invoice: the no-surprises promise |
 
 ## Rules
 

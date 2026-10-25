@@ -61,6 +61,13 @@ export const PHOTOS = {
     tone: '#3a2a1c',
     src: '/photos/stool.jpg',
   },
+  // Bridge Street Garage (concept). No src yet: Russell is sending real photos.
+  gsWorkshop: { alt: 'The front of the workshop in daylight, roller doors open and a car on the first ramp', query: 'independent garage workshop exterior', tone: '#c9ccc4' },
+  gsTeam: { alt: 'The owner and two mechanics in workwear outside the workshop', query: 'mechanics team portrait', tone: '#b9bcb3' },
+  gsRamp: { alt: 'A car up on the ramp mid-job, wheels off', query: 'car on ramp garage', tone: '#a9aca4' },
+  gsHands: { alt: 'Hands fitting a new brake disc', query: 'mechanic brake disc', tone: '#8f918a' },
+  gsWaiting: { alt: 'The waiting room, with a coffee machine and a sofa', query: 'garage waiting room', tone: '#d3d0c6' },
+  gsCourtesy: { alt: 'The courtesy car parked on the forecourt', query: 'courtesy car forecourt', tone: '#c2c6c9' },
 } satisfies Record<string, PhotoSlot>;
 
 export type PhotoId = keyof typeof PHOTOS;
