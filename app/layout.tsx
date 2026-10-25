@@ -1,19 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, Kalam } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
-const hanken = Hanken_Grotesk({
+const sans = Instrument_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-text",
+  weight: ["400", "500", "600"],
+  variable: "--hb-sans",
   display: "swap",
 });
 
-const kalam = Kalam({
+const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-chalk",
+  style: ["normal", "italic"],
+  variable: "--hb-serif",
   display: "swap",
 });
 
@@ -22,7 +23,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hardtobear.uk";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0c0a08",
+  themeColor: "#F2EFEA",
 };
 
 export const metadata: Metadata = {
@@ -32,9 +33,8 @@ export const metadata: Metadata = {
     "Websites for pubs, garages, driving instructors and barbers. Fixed prices, live in seven days, and you change it by sending a text.",
   authors: [{ name: "Russell Westgarth" }],
   openGraph: {
-    title: "Hard To Bear | Websites for local trades",
-    description:
-      "Fixed prices, live in seven days, and you change it by sending a text.",
+    title: "Hard To Bear | Websites that pull a crowd",
+    description: "Fixed prices, live in seven days, and you change it by sending a text.",
     url: siteUrl,
     siteName: "Hard To Bear",
     locale: "en_GB",
@@ -47,7 +47,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB" className={`${hanken.variable} ${kalam.variable}`}>
+    <html lang="en-GB" className={`${sans.variable} ${serif.variable}`}>
       <body>
         <GoogleAnalytics />
         {children}
