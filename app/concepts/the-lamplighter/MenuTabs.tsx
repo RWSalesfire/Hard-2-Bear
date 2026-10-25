@@ -1,11 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import { DIET_LABELS, MENU, type Diet, type Dish } from './data';
-
-gsap.registerPlugin(useGSAP);
 
 const FILTERS: { id: Diet | null; label: string }[] = [
   { id: null, label: 'Everything' },
@@ -21,18 +17,6 @@ export default function MenuTabs() {
   const [active, setActive] = useState(0);
   const [filter, setFilter] = useState<Diet | null>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const list = useRef<HTMLUListElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.from('.lp-dish', { y: 14, autoAlpha: 0, duration: 0.45, stagger: 0.05, ease: 'power2.out', clearProps: 'opacity,visibility,transform' });
-      });
-      return () => mm.revert();
-    },
-    { scope: list, dependencies: [active], revertOnUpdate: true }
-  );
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
     let next = i;
@@ -91,9 +75,10 @@ export default function MenuTabs() {
               : `Nothing ${label} on this one yet. Ask at the bar, the kitchen can usually adapt something.`
             : m.updated}
         </p>
-        <ul className="lp-menu__list" ref={list}>
-          {m.dishes.map((d) => (
-            <li key={d.name} className={fits(d, filter) ? 'lp-dish' : 'lp-dish is-out'}>
+        {/* Keyed by tab so the list remounts and the dishes step in again (CSS). */}
+        <ul className="lp-menu__list" key={m.id}>
+          {m.dishes.map((d, i) => (
+            <li key={d.name} className={fits(d, filter) ? 'lp-dish' : 'lp-dish is-out'} style={{ '--i': i } as React.CSSProperties}>
               <span className="lp-dish__name">
                 {d.name}
                 {d.note && <span className="lp-dish__note">{d.note}</span>}

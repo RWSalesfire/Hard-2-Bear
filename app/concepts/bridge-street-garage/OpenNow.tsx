@@ -42,7 +42,8 @@ export default function OpenNow() {
   return (
     <div className="gs-status" aria-live="polite">
       <p className={`gs-status__pill${s ? (s.open ? ' is-open' : ' is-closed') : ''}`}>{s ? s.text : 'Mon to Fri 8 to 5:30, Sat 8 to 12'}</p>
-      {s?.sub && <p className="gs-status__sub">{s.sub}</p>}
+      {/* Always rendered, so the line's space is there before the live status fills it in. */}
+      <p className="gs-status__sub">{s ? s.sub || '\u00a0' : 'Ring us and we\u2019ll tell you the next free slot'}</p>
     </div>
   );
 }

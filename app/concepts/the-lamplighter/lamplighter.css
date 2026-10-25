@@ -1055,3 +1055,65 @@
 .lp[data-time='night'] .lp-event__when {
   color: #e8907c;
 }
+
+/* The lights coming on. Plain CSS so it plays on first paint, before any script:
+   the photo warms up from blue dusk, the lantern flickers on, then the headline rises. */
+@media (prefers-reduced-motion: no-preference) {
+  .lp-hero__media .photo {
+    animation: lp-dusk 2.4s ease-in-out backwards;
+  }
+  .lp-hero__glow {
+    animation:
+      lp-flicker 1.06s 0.6s linear forwards,
+      lp-breathe 2.4s 1.66s ease-in-out infinite alternate;
+  }
+  .lp-hero__line > * {
+    display: inline-block;
+    animation: lp-rise 0.9s 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .lp-hero__line + .lp-hero__line > * { animation-delay: 0.98s; }
+  .lp-hero__meta > * {
+    animation: lp-up 0.6s 1.3s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .lp-hero__meta > :nth-child(2) { animation-delay: 1.37s; }
+  .lp-hero__meta > :nth-child(3) { animation-delay: 1.44s; }
+  .lp-hero__meta > :nth-child(4) { animation-delay: 1.51s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-hero__glow { opacity: 0.85; }
+}
+
+@keyframes lp-dusk {
+  from { filter: brightness(0.3) saturate(0.35) hue-rotate(-14deg); }
+  to { filter: none; }
+}
+
+@keyframes lp-flicker {
+  0% { opacity: 0; }
+  11% { opacity: 0.7; }
+  21% { opacity: 0.15; }
+  34% { opacity: 0.9; }
+  43% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+@keyframes lp-breathe {
+  from { opacity: 1; }
+  to { opacity: 0.8; }
+}
+
+@keyframes lp-rise {
+  from { transform: translateY(110%); }
+}
+
+@keyframes lp-up {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+/* Dishes step in when a menu tab opens (the list remounts per tab). */
+@media (prefers-reduced-motion: no-preference) {
+  .lp-dish {
+    animation: lp-up 0.45s calc(var(--i, 0) * 0.05s) ease-out backwards;
+  }
+}

@@ -1417,3 +1417,51 @@ textarea {
     align-items: end;
   }
 }
+
+/* Photo wrapper from components/Photo.tsx: lets the img size itself as if the wrapper weren't there. */
+.photo-pic {
+  display: contents;
+}
+
+/* Hero entrance. Plain CSS so it plays on first paint, before any script.
+   `backwards` holds the start state during the delay, then hands back to normal styles. */
+@media (prefers-reduced-motion: no-preference) {
+  .hb-hero__line > span {
+    animation: hb-rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .hb-hero__line:nth-child(2) > span { animation-delay: 0.09s; }
+  .hb-hero__line:nth-child(3) > span { animation-delay: 0.18s; }
+  .hb-hero__line:nth-child(4) > span { animation-delay: 0.27s; }
+  /* The intro paragraph only slides: it's the largest text on a phone, so it stays visible from the first paint. */
+  .hb-hero__fade {
+    animation: hb-slide 0.8s 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .hb-hero__fade + .hb-hero__fade {
+    animation: hb-up 0.8s 0.53s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .hb-phone {
+    animation: hb-phone 1.2s 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+}
+
+@keyframes hb-rise {
+  from { transform: translateY(115%); }
+}
+
+@keyframes hb-up {
+  from { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes hb-slide {
+  from { transform: translateY(20px); }
+}
+
+@keyframes hb-phone {
+  from { opacity: 0; transform: translateY(80px) rotate(4deg); }
+}
+
+/* Agency pages: the font variable arrives on this wrapper (see app/(agency)/layout.tsx). */
+.hb-root {
+  --sans: var(--hb-sans), 'Arial Narrow', system-ui, sans-serif;
+  font-family: var(--sans);
+}

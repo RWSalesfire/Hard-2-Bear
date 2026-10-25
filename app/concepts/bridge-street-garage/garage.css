@@ -1155,3 +1155,54 @@
     aspect-ratio: 21 / 9 !important;
   }
 }
+
+/* The job card printing in. Plain CSS so it plays on first paint, before any script.
+   The headline is left alone: it's the first thing a phone paints. */
+@media (prefers-reduced-motion: no-preference) {
+  .gs-hero__text > :not(h1) {
+    animation: gs-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .gs-hero__text > :nth-child(3) { animation-delay: 0.08s; }
+  .gs-hero__text > :nth-child(4) { animation-delay: 0.16s; }
+  .gs-card {
+    animation: gs-print 0.8s 0.15s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .gs-card__carbon {
+    animation: gs-fade 0.6s 0.6s ease-out backwards;
+  }
+  .gs-card .gs-plate,
+  .gs-card .gs-sizes,
+  .gs-job,
+  .gs-card__total,
+  .gs-card__small,
+  .gs-card__actions {
+    animation: gs-type 0.35s calc(0.45s + var(--i, 0) * 0.05s) ease-out backwards;
+  }
+  .gs-card .gs-sizes { --i: 1; }
+  .gs-card__total { --i: 10; }
+  .gs-card__small { --i: 11; }
+  .gs-card__actions { --i: 12; }
+  .gs-stamp {
+    animation: gs-stamp 0.35s 0.25s cubic-bezier(0.34, 1.8, 0.64, 1) backwards;
+  }
+}
+
+@keyframes gs-up {
+  from { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes gs-print {
+  from { opacity: 0; transform: translateY(8%); }
+}
+
+@keyframes gs-fade {
+  from { opacity: 0; }
+}
+
+@keyframes gs-type {
+  from { opacity: 0; transform: translateX(-8px); }
+}
+
+@keyframes gs-stamp {
+  from { opacity: 0; transform: scale(1.6) rotate(-18deg); }
+}

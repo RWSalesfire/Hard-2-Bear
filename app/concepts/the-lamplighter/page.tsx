@@ -61,6 +61,15 @@ export default function Lamplighter() {
   return (
     <>
       <Motion />
+      {/* Start the hero photo straight away, alongside the fonts, rather than after the page is read. */}
+      <link
+        rel="preload"
+        as="image"
+        type="image/webp"
+        imageSrcSet="/photos/lp-hero-640.webp 640w, /photos/lp-hero-1080.webp 1080w, /photos/lp-hero-1600.webp 1600w"
+        imageSizes="100vw"
+        fetchPriority="high"
+      />
       <p className="lp-concept">
         Concept site by <Link href="/">Hard To Bear</Link>. The Lamplighter isn&rsquo;t a real pub. <TimeToggle />
       </p>
@@ -83,7 +92,7 @@ export default function Lamplighter() {
       <main id="top">
         <section className="lp-hero" aria-labelledby="lp-title">
           <div className="lp-hero__media">
-            <Photo id="lpHero" priority width={2000} height={1400} />
+            <Photo id="lpHero" priority width={2000} height={1400} sizes="100vw" />
             <span className="lp-hero__glow" aria-hidden="true" />
           </div>
           <Weather />
@@ -131,7 +140,7 @@ export default function Lamplighter() {
             {EVENTS.map((e) => (
               <li key={e.title} className="lp-event" data-reveal>
                 <div className="lp-event__media">
-                  <Photo id={e.photo} width={900} height={1100} />
+                  <Photo id={e.photo} width={900} height={1100} sizes="(min-width: 760px) 34vw, 78vw" />
                 </div>
                 <p className="lp-event__when">{e.when}</p>
                 <h3>{e.title}</h3>

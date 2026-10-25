@@ -1,15 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-
-// One family for the whole brand: Archivo, with its width axis for the wide display cuts.
-const archivo = Archivo({
-  subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--hb-sans",
-  display: "swap",
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hardtobear.uk";
 
@@ -40,7 +31,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB" className={archivo.variable}>
+    <html lang="en-GB">
       <body>
         <GoogleAnalytics />
         {children}

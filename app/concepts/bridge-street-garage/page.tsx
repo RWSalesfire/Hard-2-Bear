@@ -164,16 +164,16 @@ export default function BridgeStreetGarage() {
           </div>
           <div className="gs-gallery">
             <div className="gs-gallery__big" data-reveal>
-              <Photo id="gsWorkshop" width={1600} height={1100} />
+              <Photo id="gsWorkshop" width={1600} height={1100} sizes="100vw" />
             </div>
             <div data-reveal>
-              <Photo id="gsTeam" width={1000} height={1000} />
+              <Photo id="gsTeam" width={1000} height={1000} sizes="(min-width: 760px) 33vw, 50vw" />
             </div>
             <div data-reveal>
-              <Photo id="gsRamp" width={1000} height={1000} />
+              <Photo id="gsRamp" width={1000} height={1000} sizes="(min-width: 760px) 33vw, 50vw" />
             </div>
             <div data-reveal>
-              <Photo id="gsHands" width={1000} height={1000} />
+              <Photo id="gsHands" width={1000} height={1000} sizes="(min-width: 760px) 33vw, 50vw" />
             </div>
           </div>
         </section>

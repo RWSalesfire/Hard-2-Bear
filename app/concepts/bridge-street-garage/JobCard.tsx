@@ -1,11 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import { CARD_JOBS, GARAGE, MOT_WITH_SERVICE, SIZES, priceFor, type Size } from './data';
-
-gsap.registerPlugin(useGSAP);
 
 const money = (n: number) => `£${n}`;
 
@@ -16,8 +12,7 @@ export default function JobCard() {
   const [picked, setPicked] = useState<string[]>(['mot', 'full']);
   const [date, setDate] = useState('');
   const totalRef = useRef<HTMLSpanElement>(null);
-  const stampRef = useRef<HTMLSpanElement>(null);
-  const shown = useRef({ n: 0 });
+  const shown = useRef(-1);
 
   useEffect(() => {
     setDate(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', day: 'numeric', month: 'short', year: 'numeric' }).format(new Date()));
@@ -33,30 +28,27 @@ export default function JobCard() {
   const total = lines.reduce((t, l) => t + l.cost, 0);
   const from = lines.some((l) => l.from);
 
-  // The total rolls to its new figure and the stamp lands again.
-  useGSAP(
-    () => {
-      const el = totalRef.current;
-      if (!el) return;
-      const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (calm) {
-        shown.current.n = total;
-        el.textContent = String(total);
-        return;
-      }
-      gsap.to(shown.current, {
-        n: total,
-        duration: 0.6,
-        ease: 'power2.out',
-        onUpdate: () => {
-          el.textContent = String(Math.round(shown.current.n));
-        },
-      });
-      if (total > 0 && stampRef.current)
-        gsap.fromTo(stampRef.current, { scale: 1.6, rotate: -18, autoAlpha: 0 }, { scale: 1, rotate: -8, autoAlpha: 1, duration: 0.35, ease: 'back.out(2.2)', delay: 0.25 });
-    },
-    { dependencies: [total] }
-  );
+  // The total rolls to its new figure. A few lines of requestAnimationFrame, so no animation library on the first screen.
+  useEffect(() => {
+    const el = totalRef.current;
+    if (!el) return;
+    const from = shown.current < 0 ? total : shown.current;
+    shown.current = total;
+    if (from === total || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = String(total);
+      return;
+    }
+    const start = performance.now();
+    let raf = 0;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / 600);
+      const eased = 1 - (1 - t) * (1 - t);
+      el.textContent = String(Math.round(from + (total - from) * eased));
+      if (t < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [total]);
 
   const toggle = (id: string) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
 
@@ -120,7 +112,7 @@ export default function JobCard() {
           const line = lines.find((l) => l.id === j.id);
           const cost = line ? line.cost : j.id === 'mot' && picked.includes('full') ? MOT_WITH_SERVICE : priceFor(j, size);
           return (
-            <label key={j.id} className="gs-job">
+            <label key={j.id} className="gs-job" style={{ '--i': 2 + CARD_JOBS.indexOf(j) } as React.CSSProperties}>
               <input type="checkbox" checked={on} onChange={() => toggle(j.id)} />
               <span className="gs-job__box" aria-hidden="true" />
               <span className="gs-job__name">
@@ -143,7 +135,8 @@ export default function JobCard() {
           £<span ref={totalRef}>{total}</span>
         </span>
         {total > 0 && (
-          <span className="gs-stamp" ref={stampRef} aria-hidden="true">
+          // Keyed by total so the stamp lands again (CSS) whenever the price changes.
+          <span className="gs-stamp" key={total} aria-hidden="true">
             {from ? 'Price first' : 'Fixed price'}
           </span>
         )}

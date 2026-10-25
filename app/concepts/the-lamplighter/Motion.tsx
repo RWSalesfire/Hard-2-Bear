@@ -1,41 +1,12 @@
 'use client';
 
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { useMotion } from '@/lib/motion';
 
 /** Page motion for the concept pub. Content is visible without it; reduced motion skips the travel. */
 export default function Motion() {
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
+  useMotion(({ gsap, ScrollTrigger, mm }) => {
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Signature move: the lights come on. The photo starts at blue dusk and warms up,
-      // the lantern glow flickers on, then the headline rises.
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.fromTo(
-        '.lp-hero__media .photo',
-        { filter: 'brightness(0.3) saturate(0.35) hue-rotate(-14deg)' },
-        { filter: 'brightness(1) saturate(1) hue-rotate(0deg)', duration: 2.4, ease: 'power2.inOut' },
-        0
-      )
-        .to(
-          '.lp-hero__glow',
-          {
-            keyframes: [
-              { opacity: 0.7, duration: 0.12 },
-              { opacity: 0.15, duration: 0.1 },
-              { opacity: 0.9, duration: 0.14 },
-              { opacity: 0.4, duration: 0.1 },
-              { opacity: 1, duration: 0.6 },
-            ],
-          },
-          0.6
-        )
-        .from('.lp-hero__line > span', { yPercent: 110, duration: 0.9, stagger: 0.08 }, 0.9)
-        .from('.lp-hero__meta > *', { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.07 }, '-=0.5')
-        .to('.lp-hero__glow', { opacity: 0.8, duration: 2.4, ease: 'sine.inOut', repeat: -1, yoyo: true });
+      // The lights coming on (the signature move) is in lamplighter.css, so it plays before any script loads.
 
       // The what's-on ticker rolls on its own and speeds up with the scroll.
       const loop = gsap.to('.lp-ticker__track', { xPercent: -50, duration: 32, ease: 'none', repeat: -1 });
@@ -102,7 +73,6 @@ export default function Motion() {
       });
       return () => viewport.classList.remove('is-pinned');
     });
-    return () => mm.revert();
   });
   return null;
 }

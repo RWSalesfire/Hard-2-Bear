@@ -1,10 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(useGSAP);
+import { useMotion } from '@/lib/motion';
 
 /**
  * The care plan, shown working: a text arrives asking to move quiz night,
@@ -13,12 +10,10 @@ gsap.registerPlugin(useGSAP);
 export default function HeroDemo() {
   const root = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
+  // The phone's entrance is CSS; the text-and-update loop starts once GSAP has loaded.
+  useMotion(({ gsap, mm }) => {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.from('.hb-phone', { y: 80, rotate: 4, autoAlpha: 0, duration: 1.2, ease: 'power3.out', delay: 0.35 });
-        const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5, delay: 1.6 });
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5, delay: 0.4 });
         tl.set('.hb-demo__note', { autoAlpha: 0, y: -16 })
           .set('.hb-demo__when--old', { autoAlpha: 1 })
           .set('.hb-demo__when--new', { autoAlpha: 0 })
@@ -34,10 +29,7 @@ export default function HeroDemo() {
         gsap.set('.hb-demo__when--old', { autoAlpha: 0 });
         gsap.set('.hb-demo__when--new', { autoAlpha: 1 });
       });
-      return () => mm.revert();
-    },
-    { scope: root }
-  );
+  });
 
   return (
     <div className="hb-hero__stage" ref={root}>

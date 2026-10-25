@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+// Four font files in all: every extra weight is another download before a phone can draw the page.
 import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Condensed } from 'next/font/google';
 import './garage.css';
 
-const sans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--gs-sans', display: 'swap' });
-const cond = IBM_Plex_Sans_Condensed({ subsets: ['latin'], weight: ['500', '700'], variable: '--gs-cond', display: 'swap' });
-const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--gs-mono', display: 'swap' });
+const sans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '600'], variable: '--gs-sans', display: 'swap' });
+const cond = IBM_Plex_Sans_Condensed({ subsets: ['latin'], weight: ['700'], variable: '--gs-cond', display: 'swap' });
+const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500'], variable: '--gs-mono', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Bridge Street Garage | Concept garage website by Hard To Bear',

@@ -1,21 +1,12 @@
 'use client';
 
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { useMotion } from '@/lib/motion';
 
 /** Page motion. Everything is readable without it; reduced motion skips the travel. */
 export default function Motion() {
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
+  useMotion(({ gsap, ScrollTrigger, mm }) => {
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Hero: headline lines rise from their masks, then the rest.
-      gsap
-        .timeline({ defaults: { ease: 'power4.out' } })
-        .from('.hb-hero__line > span', { yPercent: 115, duration: 1.1, stagger: 0.09 })
-        .from('.hb-hero__fade', { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.08 }, '-=0.7');
+      // The hero's entrance is in globals.css, so it plays before any script loads.
 
       // Trades marquee drifts on its own and speeds up with the scroll.
       const track = document.querySelector<HTMLElement>('.hb-marquee__track');
@@ -63,7 +54,6 @@ export default function Motion() {
         });
       });
     });
-    return () => mm.revert();
   });
   return null;
 }
