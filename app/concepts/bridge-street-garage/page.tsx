@@ -193,7 +193,7 @@ export default function BridgeStreetGarage() {
               ))}
             </ul>
             <div className="gs-wait__media" data-reveal>
-              <Photo id="gsWaiting" width={1200} height={900} />
+              <Photo id="gsDetail" width={1200} height={900} />
             </div>
           </div>
           <ul className="gs-badges" aria-label="Memberships (samples)" data-reveal>

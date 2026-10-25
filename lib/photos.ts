@@ -61,11 +61,13 @@ export const PHOTOS = {
     tone: '#3a2a1c',
     src: '/photos/stool.jpg',
   },
-  // Bridge Street Garage (concept). No src yet: Russell is sending real photos.
-  gsWorkshop: { alt: 'The front of the workshop in daylight, roller doors open and a car on the first ramp', query: 'independent garage workshop exterior', tone: '#c9ccc4' },
-  gsTeam: { alt: 'The owner and two mechanics in workwear outside the workshop', query: 'mechanics team portrait', tone: '#b9bcb3' },
-  gsRamp: { alt: 'A car up on the ramp mid-job, wheels off', query: 'car on ramp garage', tone: '#a9aca4' },
-  gsHands: { alt: 'Hands fitting a new brake disc', query: 'mechanic brake disc', tone: '#8f918a' },
+  // Bridge Street Garage (concept). Photos from Russell, logos blurred.
+  gsWorkshop: { alt: 'A mechanic at the workbench, a car up on the lift and two wheels leaning on the post', query: 'independent garage workshop', tone: '#3b3026', src: '/photos/gs-workshop.jpg' },
+  gsTeam: { alt: 'A mechanic leaning into an engine bay with a torch', query: 'mechanic portrait', tone: '#1d2326', src: '/photos/gs-team.jpg' },
+  gsRamp: { alt: 'A mechanic working under the open bonnet of a car', query: 'car under bonnet garage', tone: '#2a2d30', src: '/photos/gs-ramp.jpg' },
+  gsHands: { alt: 'Fresh oil going in through a funnel during a service', query: 'mechanic oil change', tone: '#3a3a36', src: '/photos/gs-hands.jpg' },
+  gsDetail: { alt: 'The belts and pulleys on the front of an engine', query: 'engine belt pulleys', tone: '#2f2f2f', src: '/photos/gs-detail.jpg' },
+  // Still to shoot for a real client.
   gsWaiting: { alt: 'The waiting room, with a coffee machine and a sofa', query: 'garage waiting room', tone: '#d3d0c6' },
   gsCourtesy: { alt: 'The courtesy car parked on the forecourt', query: 'courtesy car forecourt', tone: '#c2c6c9' },
 } satisfies Record<string, PhotoSlot>;
