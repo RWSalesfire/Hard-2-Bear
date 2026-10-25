@@ -1,119 +1,90 @@
 # Hard To Bear – Design Spec
 
-The rulebook for the agency site and every mock site built under the Hard To Bear name. It replaces the first-pass brief in `AGENCY_BRIEF.md` and the "back-bar wall" homepage.
+The rulebook for Hard To Bear's own agency site. It replaces the first-pass brief in `AGENCY_BRIEF.md`.
 
-**Where it comes from:** Russell's three references, captured as phone-width screenshots on 25 October 2026: Superside (superside.com), KOTA (kota.co.uk) and ISI Global (isiglobal.com, built by KOTA). The aim is the same league as those sites, in Hard To Bear's own voice. It is not a copy of any of them.
+**Agency site only.** Mock and client sites (like The Lamplighter) get their own brand, built around the client. They must look distinctly different from Hard To Bear and from each other. Nothing here applies to them.
 
-**Skills:** this spec is the brief. `impeccable` does craft and polish and follows it. `taste-skill`'s house rules ban several things this spec asks for (pill buttons, rounded cards, numbered steps, serif accent words, small labels), so it is not used for this site. GSAP's official skills handle motion once installed.
+**Where it comes from:** Russell's three references, captured as phone-width screenshots on 25 October 2026: Superside, KOTA and ISI Global. The aim is the same league as those sites, in Hard To Bear's own voice. It is not a copy of any of them.
 
-## 1. What the references share
+## 1. Brand
 
-| Trait | What it looks like |
-|---|---|
-| Calm ground, hard contrast | Warm off-white pages broken by full black sections. One sharp accent colour. |
-| Confident type | Large, sentence case, tight. A clean sans, with a serif on a few words for warmth. |
-| Imagery everywhere | Every section carries a picture. Most of it is the work: sites on phones and laptops, case-study shots, lifestyle photography. |
-| Soft components | Pill buttons with an arrow, big-radius cards, tag chips, numbered steps, tap-to-open FAQs. |
-| Proof | Client names, case studies, big statistics. |
-| Mobile first | One column, generous spacing, big type, motion on scroll. |
+- **Direction:** dark and bold. Mostly black, honey as the punch, huge uppercase headlines.
+- **Values, loudest first:** straight talking (no jargon, no sales patter, says when a site isn't worth it), and local and personal (one person you can actually ring).
+- **The bear:** the logo mark only.
 
 ## 2. Colour
 
 | Token | Hex | Use |
 |---|---|---|
-| `paper` | `#F2EFEA` | Page background. Warm greige, deliberately not yellow cream. |
-| `paper-2` | `#E8E4DD` | Cards and tiles on paper. |
-| `ink` | `#121110` | Text and dark buttons. |
-| `ink-soft` | `#5E5A55` | Secondary text. |
-| `night` | `#0D0D0C` | Dark sections (hero, work, final call to action). |
-| `honey` | `#F5A524` | **The accent.** Primary button, arrow circles, one highlight per screen. Never a large background except the call to action block. |
-| `honey-soft` | `#FCE7BD` | Tag chips and soft backgrounds behind device mock-ups. |
+| `bg` | `#0B0B0A` | Page background. |
+| `surface` | `#151413` | Cards on black. |
+| `surface-2` | `#1F1E1C` | Second card tone, icon tiles. |
+| `ink` | `#F4F2EE` | Text on black; also the light call-to-action band. |
+| `muted` | `#9A958D` | Secondary text. |
+| `honey` | `#F5A524` | **The brand colour.** Buttons, one word per headline, the marquee band, the promises band, the hero disc, the footer name. |
 
 Rules:
-- Text on honey is `ink`, never white.
-- One accent per screen. If two things are honey, one of them is wrong.
-- Contrast: body text at least 4.5:1 on its background. `ink-soft` is never used on `paper-2` below 16px.
+- Text on honey is black, never white.
+- One honey word per headline, at most. Never honey on honey.
+- The page alternates black with two full-width breaks: the honey promises band and the light call-to-action band.
 
 ## 3. Type
 
-Two families from one designer, so they sit together naturally. Both are free on Google Fonts.
-
-- **Sans: Instrument Sans** (400, 500, 600) for headings, body and interface.
-- **Serif: Instrument Serif** (regular and italic) for one to three words inside a headline, and for big numbers.
+**One family: Archivo** (Google Fonts), using its width axis.
 
 | Step | Phone | Desktop | Set as |
 |---|---|---|---|
-| Display | 44px | 96px | Sans 500, leading 1.0, tracking -0.03em |
-| Heading | 34px | 64px | Sans 500, leading 1.05, tracking -0.025em |
-| Title | 24px | 32px | Sans 500, leading 1.15 |
-| Lead | 20px | 24px | Sans 400, leading 1.4 |
-| Body | 17px | 18px | Sans 400, leading 1.55 |
-| Small | 14px | 14px | Sans 500; used for labels and chips |
-| Number | 64px | 120px | Serif 400, leading 0.9 |
+| Hero | 38–64px | 60–112px | 800, width 112%, uppercase, leading 0.88 |
+| Display | 46px | up to 156px | 800, width 112%, uppercase, leading 0.88 |
+| Heading | 36px | up to 88px | 800, width 112%, uppercase, leading 0.92 |
+| Title | 22px | 28px | 700, sentence case |
+| Lead | 19px | 23px | 400, leading 1.45 |
+| Body | 17px | 18px | 400, leading 1.55 |
+| Label | 13px | 13px | 700, uppercase, 0.1em tracking |
 
 Rules:
-- Sentence case everywhere except small labels, which may be uppercase with 0.08em tracking (max one per section).
-- A serif word appears in at most one headline per screen, e.g. "Websites that *pull a crowd*".
-- Headlines no more than three lines on a phone. Body lines 45–70 characters.
+- Headlines are short, uppercase and end with a full stop ("THE WORK.", "FOUR STEPS. NO FAFF.").
+- No serif and no italics anywhere on the agency site.
+- Hero lines never break mid-word; long words use a non-breaking hyphen.
 
-## 4. Space and shape
+## 4. Shape and space
 
-- **Gutter:** 20px on phones, 40px on desktop. Content max width 1320px.
-- **Section spacing:** 96px on phones, 160px on desktop.
-- **Radius:** cards and big images 28px; small images and inputs 16px; buttons and chips fully round.
-- **Shadows:** none at rest. Device mock-ups may carry one soft shadow, because they float.
-- **Lines:** a 1px `ink` at 12% opacity divides list items and FAQ rows. Nothing else is outlined except secondary buttons and chips.
+- **Corners:** square-ish. Cards 6px, buttons, chips, inputs and icon tiles 4px.
+- **Buttons:** rectangular, uppercase, with the arrow in its own square cell on the right. Honey on black; black on honey or light.
+- **Lines:** 2px rules divide steps, FAQ rows and promises.
+- **Bullets:** small honey squares.
+- **Gutter:** 20px phone, 40px desktop. Max width 1360px. Sections 112px apart on phones, 180px on desktop.
 
-## 5. Components
+## 5. Imagery
 
-| Component | Spec |
-|---|---|
-| Top bar | Logo left, round menu button right (48px). On scroll, it gains a `paper` background. Desktop adds 4 links and the honey button. |
-| Primary button | Pill, honey fill, `ink` text, with a 28px `ink` circle holding a white ↗ arrow at the right end. Min height 52px. |
-| Secondary button | Pill, 1.5px `ink` outline, text plus →. |
-| Chip | Pill, `honey-soft` or 1px outline, Small step. |
-| Work card | Image (16:10 desktop, 4:5 phone, radius 28) with a device mock-up on a `honey-soft` or photo background, then "Business – What we built", one line with the business in serif. |
-| Service card | `paper-2`, radius 28, title, two lines, chips, an image at the bottom. |
-| Process step | Small "01 —" label, a Title, one or two lines. In a column on phones, a row on desktop. |
-| Guarantee figure | Number step in serif ("7 days", "£50", "1 tap"), a short line under it, divided by 12% lines. |
-| FAQ | Rows with a + that turns to ×; answer opens below. All rows keyboard-operable. |
-| Call to action | Big `night` or honey block: heading, one line, primary button, and the last orders guarantee in Small. |
-| Footer | `night`; big "Pull up a stool" heading, email with honey arrow circle, small links, the bear mark. |
+- **The work is the imagery:** screenshots and recordings of mock and client sites, on phones, shown on the client's own brand colour (e.g. the Lamplighter's oxblood).
+- **The hero:** a phone demo of the care plan (a text arrives, the site updates) standing on a honey disc.
+- **No clip-art, ever.** No stock photos of laptops.
 
-## 6. Imagery
-
-- **Every section has a picture.** No clip-art, ever.
-- **The work is the hero imagery:** screenshots and short screen recordings of the mock sites (pub first, then garage), placed on phones and laptops, angled, on `honey-soft` or photo backgrounds.
-- **Photography:** real photos from open libraries (Unsplash, Wikimedia Commons, Openverse), credited where the licence asks. Pubs, workshops, high streets, people at work. Warm, natural light, with no fake smiles at laptops.
-- **On client sites:** only the client's own real photos (see the house playbook). Library photos are for mock sites and the agency site only, and the mock sites are labelled as concepts.
-- **The bear:** the logo mark only. No illustrations of it elsewhere.
-
-## 7. Motion (GSAP)
+## 6. Motion (GSAP)
 
 | Moment | Move |
 |---|---|
-| Page load | Hero headline lines rise out of a mask, 80ms apart, 0.9s. |
-| Hero media | Starts at 0.92 scale with a radius, settles to full size as you scroll the first 40%. |
-| Section entrance | Heading, then text, then picture; rise 24px and fade, 70ms stagger, once only. |
-| Work cards | Images reveal with a clip from the bottom; slight parallax inside the frame. |
-| Guarantee figures | Count up once when they enter. |
-| Buttons | Arrow nudges 3px on hover or press; press scales to 0.97. |
-| Live demo | A phone mock-up: a text message arrives ("Can you change quiz night to Thursday?") and the pub site on screen updates. This replaces the chalkboard. |
+| Page load | Hero lines rise from their masks, 90ms apart. |
+| Hero phone | Rises in, then loops the care-plan demo. |
+| Marquee | The honey band drifts sideways, faster when you scroll. |
+| Sections | Parts rise 32px and fade in, once. |
+| Work | Phones drift at different speeds inside the card. |
+| Figures | Count up once. |
+| Buttons | Arrow nudges up and right on hover. |
 
-Every move uses transform and opacity only, and switches to a plain fade under `prefers-reduced-motion`. Nothing important waits for an animation to be readable.
+Transform and opacity only. Under `prefers-reduced-motion` everything is static and readable.
 
-## 8. Voice
+## 7. Homepage order
 
-Keep the cheek, lose the theme park. Plain, direct, British. The pub idea lives in a few phrases ("Pull up a stool", "last orders guarantee"), not in costumes, chalk fonts or props.
-
-## 9. Homepage outline (to be built)
-
-1. **Hero (night):** "Websites that *pull a crowd*" (working line), one line on who it's for, primary button, the live phone demo or a hero photo.
-2. **The problem:** the "Ask for Dave" word-of-mouth story, with a photo.
-3. **Work:** the pub and garage mock sites as work cards.
-4. **What you get:** service cards by trade (pubs, garages, driving instructors, barbers).
-5. **How it works:** four numbered steps: chat, plan, build, live.
-6. **Guarantees:** "7 days", "£50 a month", "1 tap to call", in serif numbers.
-7. **Prices:** three packages and the care plan as cards; the recommended one in honey.
-8. **FAQ.**
-9. **Call to action and footer.**
+1. Hero: "No-nonsense websites for local grafters." with the phone demo.
+2. Honey trades marquee.
+3. Problem: "Half the town asks for Dave." with the "near me" search.
+4. Work: The Lamplighter, and "Your business here."
+5. Trades: four cards, pubs first in honey.
+6. How it works: four numbered steps.
+7. Promises (honey band): 7 days, £50, 1 tap, 0 logins.
+8. Prices: four cards, Local Pro in honey.
+9. Straight answers (FAQ).
+10. Pull up a stool (light band): who you'll deal with, the guarantee and the form.
+11. Footer with the name set huge in honey.

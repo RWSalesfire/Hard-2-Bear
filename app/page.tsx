@@ -8,7 +8,7 @@ import { Arrow, BearMark } from '@/components/hb/Icons';
 
 const CONTACT_EMAIL = 'hello@hardtobear.uk';
 
-const TRADES_MARQUEE = ['Pubs', 'garages', 'Driving instructors', 'barbers', 'Cafés', 'mechanics', 'Salons', 'locals'];
+const TRADES_MARQUEE = ['Pubs', 'Garages', 'Driving instructors', 'Barbers', 'Cafés', 'Mechanics', 'Salons', 'Plumbers'];
 
 const TRADES = [
   {
@@ -136,17 +136,23 @@ export default function Home() {
             <div className="hb-hero__text">
               <h1 id="hero-title" className="hb-display">
                 <span className="hb-hero__line">
-                  <span>Websites that</span>
+                  <span>No‑nonsense</span>
+                </span>
+                <span className="hb-hero__line">
+                  <span>websites</span>
+                </span>
+                <span className="hb-hero__line">
+                  <span>for local</span>
                 </span>
                 <span className="hb-hero__line">
                   <span>
-                    <em>pull a crowd</em>
+                    <em>grafters.</em>
                   </span>
                 </span>
               </h1>
               <p className="hb-lead hb-hero__lede hb-hero__fade">
-                For pubs, garages, driving instructors and barbers. Fixed prices, live in seven days, and you change it by sending a
-                text.
+                For pubs, garages, driving instructors and barbers. <strong>Built by one person you can actually ring.</strong>{' '}
+                Fixed prices, live in seven days, and you change it by sending a text.
               </p>
               <div className="hb-hero__actions hb-hero__fade">
                 <ArrowButton href="#stool">Pull up a stool</ArrowButton>
@@ -173,11 +179,11 @@ export default function Home() {
             <div className="hb-dave__text" data-reveal>
               <p className="hb-label hb-soft">Word of mouth</p>
               <h2 id="dave-title" className="hb-heading">
-                Half the town knows to <em>ask for Dave</em>
+                Half the town asks for <em>Dave.</em>
               </h2>
               <p className="hb-lead hb-soft">
                 The other half types &ldquo;mechanic near me&rdquo; and rings someone else. Word of mouth only reaches people who
-                already know you. We put you where everyone else is looking.
+                already know you. A proper site and Google listing reach everyone else. Simple as that.
               </p>
             </div>
             <div className="hb-dave__search" data-reveal>
@@ -208,7 +214,7 @@ export default function Home() {
           <div className="hb-wrap">
             <div className="hb-head hb-head--row" data-reveal>
               <h2 id="work-title" className="hb-heading">
-                The <em>work</em>
+                The <em>work.</em>
               </h2>
               <p className="hb-lead hb-soft">
                 Concept sites, built the way we&rsquo;d build yours. The first real one is a pub opening in December.
@@ -239,9 +245,9 @@ export default function Home() {
                   Next up
                 </p>
                 <p className="hb-heading">
-                  Your business <em>here</em>
+                  Your business <em>here.</em>
                 </p>
-                <p style={{ color: 'rgba(255,255,255,0.75)' }}>Garages, driving instructors and barbers are next on the bench.</p>
+                <p className="hb-soft">Garages, driving instructors and barbers are next on the bench.</p>
                 <span className="hb-btn" style={{ justifySelf: 'start' }}>
                   Pull up a stool
                   <span className="hb-btn__arrow">
@@ -258,7 +264,7 @@ export default function Home() {
           <div className="hb-wrap">
             <div className="hb-head hb-head--row" data-reveal>
               <h2 id="trades-title" className="hb-heading">
-                Built for <em>your</em> trade
+                Built for <em>your trade.</em>
               </h2>
               <p className="hb-lead hb-soft">Every trade gets asked different questions. Your site answers them before the phone rings.</p>
             </div>
@@ -290,7 +296,7 @@ export default function Home() {
           <div className="hb-wrap">
             <div className="hb-head" data-reveal>
               <h2 id="how-title" className="hb-heading">
-                Four steps, <em>no faff</em>
+                Four steps. <em>No faff.</em>
               </h2>
             </div>
             <ol className="hb-steps">
@@ -312,7 +318,7 @@ export default function Home() {
           <div className="hb-promises__card">
             <div className="hb-head" data-reveal>
               <h2 id="promise-title" className="hb-heading">
-                Promises, <em>in writing</em>
+                Promises in writing.
               </h2>
             </div>
             <div className="hb-promises__grid">
@@ -345,7 +351,7 @@ export default function Home() {
           <div className="hb-wrap">
             <div className="hb-head hb-head--row" data-reveal>
               <h2 id="prices-title" className="hb-heading">
-                Prices on <em>the bar</em>
+                What it <em>costs.</em>
               </h2>
               <p className="hb-lead hb-soft">Fixed prices, written down. No quote dance, no surprises.</p>
             </div>
@@ -377,9 +383,9 @@ export default function Home() {
           <div className="hb-wrap hb-faq-wrap">
             <div className="hb-head" data-reveal>
               <h2 id="faq-title" className="hb-heading">
-                Asked <em>at the bar</em>
+                Straight <em>answers.</em>
               </h2>
-              <p className="hb-lead hb-soft">The questions everyone asks before they pull up a stool.</p>
+              <p className="hb-lead hb-soft">No jargon, no sales patter. If a website isn&rsquo;t worth it for you, we&rsquo;ll say so.</p>
             </div>
             <Faq items={FAQS} />
           </div>
@@ -390,10 +396,16 @@ export default function Home() {
           <div className="hb-cta__card">
             <div style={{ display: 'grid', gap: 20 }}>
               <h2 id="stool-title" className="hb-display">
-                Pull up <em>a stool</em>
+                Pull up <em>a stool.</em>
               </h2>
               <p className="hb-lead">Fifteen minutes, in person or on the phone. We&rsquo;ll tell you straight whether a website is worth it.</p>
-              <p style={{ fontWeight: 600 }}>Last orders guarantee: live in seven days, or your first month of care is on us.</p>
+              <p className="hb-cta__who">
+                <span>
+                  <BearMark size={34} />
+                </span>
+                You&rsquo;ll deal with Russell from start to finish. No call centre, no account manager, no runaround.
+              </p>
+              <p style={{ fontWeight: 700 }}>Last orders guarantee: live in seven days, or your first month of care is on us.</p>
             </div>
             <StoolForm />
           </div>
@@ -401,10 +413,11 @@ export default function Home() {
       </main>
 
       <footer className="hb-footer">
+        <div className="hb-wrap">
         <div className="hb-footer__top">
           <div style={{ display: 'grid', gap: 16 }}>
             <p className="hb-heading">
-              Let&rsquo;s get you <em>found</em>
+              Let&rsquo;s get you <em>found.</em>
             </p>
             <a className="hb-footer__mail" href={`mailto:${CONTACT_EMAIL}?subject=Pulling%20up%20a%20stool`}>
               {CONTACT_EMAIL}
@@ -426,6 +439,10 @@ export default function Home() {
           <p>&copy; 2026 Hard To Bear</p>
           <BearMark size={36} />
         </div>
+        </div>
+        <p className="hb-footer__name" aria-hidden="true">
+          Hard To Bear
+        </p>
       </footer>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
