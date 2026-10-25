@@ -1,5 +1,7 @@
 # Hard To Bear – Agency Site Design Brief
 
+> Superseded by `docs/DESIGN.md` (25 October 2026). Kept for the record.
+
 First pass at the design plan for turning Hard To Bear from a sales consultancy site into a web design agency site. Nothing in the live site has changed yet.
 
 ## Skills in this repo
