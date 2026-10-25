@@ -65,6 +65,14 @@ Use `client-deliverables` for the written scope or proposal.
 - Real photos, compressed, with width and height set so nothing jumps while loading.
 - Privacy notice and cookie handling that suits UK rules if analytics or bookings set cookies.
 
+**Speed rules (learned on the two concept sites, October 2026):**
+- Entrance animations go in CSS, never GSAP, so they play on first paint. Use `animation-fill-mode: backwards` so the end state hands back to normal styles.
+- Never fade in the headline or the hero photo from invisible. They're what the phone counts as "loaded".
+- GSAP is loaded after the page is idle, through `useMotion` in `lib/motion.ts`. Don't import `gsap` at the top of a component.
+- Run `python3 scripts/photo-sizes.py` after adding photos, and pass `sizes` to `<Photo>`. Preload the hero photo.
+- Load only the font weights the design uses. Each weight is another download before the page draws.
+- Measure with Lighthouse in devtools throttling mode (`--throttling-method=devtools`). The default simulated mode misreads a local server.
+
 ## Stage 4: Pre-launch checks (all must pass)
 
 - [ ] Screenshots checked at 375px (phone), 768px and 1280px. Use Playwright MCP if connected, otherwise `taste-skill`'s inspector.

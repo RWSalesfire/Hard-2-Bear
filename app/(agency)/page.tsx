@@ -2,26 +2,29 @@ import Link from 'next/link';
 import TopBar from '@/components/hb/TopBar';
 import HeroDemo from '@/components/hb/HeroDemo';
 import Faq from '@/components/hb/Faq';
-import StoolForm from '@/components/hb/StoolForm';
 import Motion from '@/components/hb/Motion';
-import { Arrow, BearMark } from '@/components/hb/Icons';
-
-const CONTACT_EMAIL = 'hello@hardtobear.uk';
+import Footer, { CONTACT_EMAIL } from '@/components/hb/Footer';
+import StoolCta from '@/components/hb/StoolCta';
+import WorkCard from '@/components/hb/WorkCard';
+import { Arrow } from '@/components/hb/Icons';
+import { WORK } from '@/lib/work';
 
 const TRADES_MARQUEE = ['Pubs', 'Garages', 'Driving instructors', 'Barbers', 'Cafés', 'Mechanics', 'Salons', 'Plumbers'];
 
-const TRADES = [
+const TRADES: { name: string; line: string; points: string[]; chips: string[]; href?: string }[] = [
   {
     name: 'Pubs and restaurants',
     line: 'Built around what people ring a pub to ask.',
     points: ['Menus and specials you can change by text', 'Table bookings through ResDiary or OpenTable', 'Quiz nights, live music and fixtures'],
     chips: ['Menus', 'Bookings', 'Events'],
+    href: '/pubs',
   },
   {
     name: 'Garages and mechanics',
     line: 'For people with a warning light on and no idea who to ring.',
     points: ['Services with starting prices', 'Quote requests that land as a text', 'MOT booking and reminders'],
     chips: ['Quotes', 'MOTs', 'Reviews'],
+    href: '/garages',
   },
   {
     name: 'Driving instructors',
@@ -74,6 +77,16 @@ const PRICES: { name: string; price: string; per?: string; line: string; points:
   },
 ];
 
+// Every extra is a fixed price too. Words come free with Local Pro and Full Works.
+const EXTRAS = [
+  { name: 'Extra page', note: 'Beyond what your package includes', price: '£200' },
+  { name: 'Words written for you', note: 'For Starter. Included in Local Pro and Full Works', price: '£300' },
+  { name: 'A simple logo', note: 'Two ideas, one round of changes, files for signs and print', price: '£400' },
+  { name: 'Photos at your place', note: 'Half a day, edited and ready for the site and Google', price: '£450' },
+  { name: 'A page for a town you cover', note: 'Written for that town, never copy and paste', price: '£150' },
+  { name: 'Business email set-up', note: 'you@yourbusiness.co.uk. The mailbox is paid to the provider', price: '£75' },
+];
+
 const FAQS = [
   {
     q: 'Do I need a website? I get by on word of mouth.',
@@ -122,12 +135,6 @@ function ArrowButton({ href, children, variant = '' }: { href: string; children:
     </a>
   );
 }
-
-// Concept sites. Each card sits on that client's own colour, so the work reads as theirs.
-const WORK = [
-  { href: '/concepts/the-lamplighter', name: 'The Lamplighter', kind: 'a village pub', bg: '#8c2a1e', shots: ['lamplighter-home', 'lamplighter-menu', 'lamplighter-visit'] },
-  { href: '/concepts/bridge-street-garage', name: 'Bridge Street Garage', kind: 'an independent garage', bg: '#1f3a93', shots: ['garage-home', 'garage-card', 'garage-how'] },
-];
 
 export default function Home() {
   return (
@@ -223,30 +230,12 @@ export default function Home() {
                 The <em>work.</em>
               </h2>
               <p className="hb-lead hb-soft">
-                Concept sites, built the way we&rsquo;d build yours. The first real one is a pub opening in December.
+                Concept sites, built the way we&rsquo;d build yours. Each one scores over 90 for speed on Google&rsquo;s own phone test. The first real one is a pub opening in December.
               </p>
             </div>
             <div className="hb-work">
               {WORK.map((w) => (
-                <Link key={w.href} className="hb-work__card" href={w.href} data-reveal>
-                  <div className="hb-work__media" style={{ background: w.bg }}>
-                    {w.shots.map((s) => (
-                      <div key={s} className="hb-work__shot">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`/work/${s}.jpg`} alt="" width={780} height={1688} loading="lazy" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="hb-work__meta">
-                    <p className="hb-title">
-                      <strong>{w.name}</strong> &ndash; {w.kind}
-                    </p>
-                    <span className="hb-btn__arrow" aria-hidden="true">
-                      <Arrow size={14} />
-                    </span>
-                  </div>
-                  <span className="sr-only">Open the concept site</span>
-                </Link>
+                <WorkCard key={w.href} w={w} />
               ))}
               <a className="hb-work__next" href="#stool" data-reveal>
                 <p className="hb-label" style={{ color: 'var(--honey)' }}>
@@ -293,6 +282,14 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
+                  {t.href && (
+                    <Link className="hb-trade__more" href={t.href}>
+                      How we build for {t.name.split(' ')[0].toLowerCase()}
+                      <span className="hb-btn__arrow" aria-hidden="true">
+                        <Arrow size={14} />
+                      </span>
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -383,6 +380,23 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+            <div className="hb-extras" data-reveal>
+              <div>
+                <h3 className="hb-title">Extras, itemised.</h3>
+                <p className="hb-soft">Only if you need them. Each one is a fixed price, written down before we start.</p>
+              </div>
+              <ul className="hb-extras__list">
+                {EXTRAS.map((x) => (
+                  <li key={x.name}>
+                    <span>
+                      {x.name}
+                      <small>{x.note}</small>
+                    </span>
+                    <strong>{x.price}</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -399,60 +413,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Call to action */}
-        <section id="stool" className="hb-cta" aria-labelledby="stool-title">
-          <div className="hb-cta__card">
-            <div style={{ display: 'grid', gap: 20 }}>
-              <h2 id="stool-title" className="hb-display">
-                Pull up <em>a stool.</em>
-              </h2>
-              <p className="hb-lead">Fifteen minutes, in person or on the phone. We&rsquo;ll tell you straight whether a website is worth it.</p>
-              <p className="hb-cta__who">
-                <span>
-                  <BearMark size={34} />
-                </span>
-                You&rsquo;ll deal with Russell from start to finish. No call centre, no account manager, no runaround.
-              </p>
-              <p style={{ fontWeight: 700 }}>Last orders guarantee: live in seven days, or your first month of care is on us.</p>
-            </div>
-            <StoolForm />
-          </div>
-        </section>
+        <StoolCta />
       </main>
 
-      <footer className="hb-footer">
-        <div className="hb-wrap">
-        <div className="hb-footer__top">
-          <div style={{ display: 'grid', gap: 16 }}>
-            <p className="hb-heading">
-              Let&rsquo;s get you <em>found.</em>
-            </p>
-            <a className="hb-footer__mail" href={`mailto:${CONTACT_EMAIL}?subject=Pulling%20up%20a%20stool`}>
-              {CONTACT_EMAIL}
-              <span className="hb-btn__arrow">
-                <Arrow size={14} />
-              </span>
-            </a>
-          </div>
-          <nav className="hb-footer__links" aria-label="Footer">
-            <a href="#work">Work</a>
-            <a href="#trades">Trades</a>
-            <a href="#prices">Prices</a>
-            <a href="#questions">Questions</a>
-            <Link href="/concepts/the-lamplighter">The Lamplighter</Link>
-            <Link href="/concepts/bridge-street-garage">Bridge Street Garage</Link>
-            <a href="#stool">Pull up a stool</a>
-          </nav>
-        </div>
-        <div className="hb-footer__bottom">
-          <p>&copy; 2026 Hard To Bear</p>
-          <BearMark size={36} />
-        </div>
-        </div>
-        <p className="hb-footer__name" aria-hidden="true">
-          Hard To Bear
-        </p>
-      </footer>
+      <Footer />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>

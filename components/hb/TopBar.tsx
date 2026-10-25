@@ -1,13 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Arrow, BearMark } from './Icons';
 
+// Full paths, so the bar works from the trade pages too. On the homepage they just scroll.
 export const NAV = [
-  { href: '#work', label: 'Work' },
-  { href: '#trades', label: 'Trades' },
-  { href: '#prices', label: 'Prices' },
-  { href: '#questions', label: 'Questions' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#trades', label: 'Trades' },
+  { href: '/#prices', label: 'Prices' },
+  { href: '/#questions', label: 'Questions' },
 ];
 
 function Burger({ open }: { open: boolean }) {
@@ -51,15 +53,15 @@ export default function TopBar() {
   return (
     <header className={`hb-top${stuck ? ' is-stuck' : ''}`}>
       <div className="hb-wrap hb-top__inner">
-        <a className="hb-logo" href="#top">
+        <Link className="hb-logo" href="/">
           <BearMark />
           Hard To Bear
-        </a>
+        </Link>
         <nav className="hb-top__links" aria-label="Main">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href}>
+            <Link key={n.href} href={n.href}>
               {n.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <a className="hb-btn hb-top__cta" href="#stool">
@@ -86,9 +88,9 @@ export default function TopBar() {
         </div>
         <nav className="hb-menu__links" aria-label="Menu">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} onClick={() => setOpen(false)}>
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}>
               {n.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <a className="hb-btn" href="#stool" onClick={() => setOpen(false)}>

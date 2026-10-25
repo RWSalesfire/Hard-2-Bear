@@ -5,7 +5,7 @@ import { Arrow } from './Icons';
 
 const TRADES = ['Pub or restaurant', 'Garage or mechanic', 'Driving instructor', 'Barber or salon', 'Something else'];
 
-export default function StoolForm() {
+export default function StoolForm({ defaultTrade = '' }: { defaultTrade?: string }) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');
 
@@ -52,7 +52,7 @@ export default function StoolForm() {
       <label className="sr-only" htmlFor="stool-trade">
         Your trade
       </label>
-      <select id="stool-trade" name="trade" defaultValue="" required>
+      <select id="stool-trade" name="trade" defaultValue={defaultTrade} required>
         <option value="" disabled>
           What&rsquo;s your trade?
         </option>
