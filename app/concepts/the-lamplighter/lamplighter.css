@@ -1050,3 +1050,8 @@
   opacity: 0.28;
   filter: grayscale(1);
 }
+
+/* Oxblood text is too dark to read at night; warm it up. */
+.lp[data-time='night'] .lp-event__when {
+  color: #e8907c;
+}
