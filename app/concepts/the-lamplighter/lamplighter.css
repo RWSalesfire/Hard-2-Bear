@@ -613,3 +613,8 @@
     display: none;
   }
 }
+
+/* Keep the door and the tree in frame when the hero is cropped tall. */
+.lp-hero__media .photo {
+  object-position: 52% 78%;
+}

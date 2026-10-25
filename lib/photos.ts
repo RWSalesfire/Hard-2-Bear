@@ -14,39 +14,46 @@ export type PhotoSlot = {
 
 export const PHOTOS = {
   lpHero: {
-    alt: 'A village pub at dusk, warm light in the windows',
+    alt: 'A village pub at night, warm light in the windows and a Christmas tree by the door',
     query: 'english village pub exterior dusk',
     tone: '#2a2620',
+    src: '/photos/lp-hero.jpg',
   },
   lpQuiz: {
-    alt: 'Friends round a pub table with quiz sheets and pints',
+    alt: 'A busy pub bar in the evening, people on stools around high tables',
     query: 'pub quiz night table',
     tone: '#3b2f25',
+    src: '/photos/lp-quiz.jpg',
   },
   lpMusic: {
-    alt: 'An acoustic guitarist playing in the corner of a pub',
+    alt: 'A guitarist and banjo player performing to a packed pub',
     query: 'acoustic musician pub',
     tone: '#2b2430',
+    src: '/photos/lp-music.jpg',
   },
   lpRoast: {
-    alt: 'A Sunday roast with Yorkshire puddings and gravy',
+    alt: 'A Sunday roast with beef, a Yorkshire pudding, carrots and greens',
     query: 'sunday roast dinner yorkshire pudding',
     tone: '#4a3a28',
+    src: '/photos/lp-roast.jpg',
   },
   lpGarden: {
-    alt: 'A pub beer garden with wooden benches in the sun and a dog under a table',
+    alt: 'A cold pint on a wooden table outside in the sun',
     query: 'pub beer garden dog',
     tone: '#3d4a2c',
+    src: '/photos/lp-garden.jpg',
   },
   lpBar: {
-    alt: 'Hand pumps on a wooden pub bar',
+    alt: 'A pint being poured from a row of taps at the bar',
     query: 'pub bar hand pumps',
     tone: '#3a2a1c',
+    src: '/photos/lp-bar.jpg',
   },
   lpRoom: {
-    alt: 'A private dining room laid for a party',
+    alt: 'A table laid with wine and a plated dinner in the afternoon sun',
     query: 'pub function room dining table',
     tone: '#33302a',
+    src: '/photos/lp-room.jpg',
   },
 } satisfies Record<string, PhotoSlot>;
 
