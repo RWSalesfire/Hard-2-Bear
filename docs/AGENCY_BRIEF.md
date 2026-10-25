@@ -1,6 +1,19 @@
 # Hard To Bear – Agency Site Design Brief
 
-First pass at the design plan for turning Hard To Bear from a sales consultancy site into a web design agency site. Written using the `frontend-design` skill in `.claude/skills/`. Nothing in the live site has changed yet.
+First pass at the design plan for turning Hard To Bear from a sales consultancy site into a web design agency site. Nothing in the live site has changed yet.
+
+## Skills in this repo
+
+All live in `.claude/skills/`, each with its own licence file.
+
+| Job | Skills |
+|---|---|
+| Design | `taste-skill` (main design direction), `impeccable` (critique and polish), `ui-ux-pro-max` (palettes and fonts for the mock sites) |
+| Pre-launch checks | `web-design-guidelines` |
+| Copy and selling | `copywriting`, `cro`, `pricing`, `offers`, which read `.claude/product-marketing.md` |
+| Local SEO | `gbp-optimization`, `local-schema`, `local-landing-pages`, `review-management`, `local-seo-audit`, `service-area-seo`, `client-deliverables` |
+
+This brief was a first pass. The design direction below gets re-run through `taste-skill` before any homepage code is written.
 
 ## The brief
 
